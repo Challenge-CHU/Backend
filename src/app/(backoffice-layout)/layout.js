@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
-import { Theme } from "react-daisyui";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,9 +12,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en" data-theme="mytheme">
-            <body className={inter.className}>
-                <p>LAYOUT PAGE</p>
-                {children}
+            <body
+                className={inter.className + " flex flex-nowrap min-h-screen"}
+            >
+                <Sidebar />
+                <main className="flex-1 p-10 bg-base-100">{children}</main>
             </body>
         </html>
     );

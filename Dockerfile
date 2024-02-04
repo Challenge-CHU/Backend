@@ -19,8 +19,8 @@ COPY --from=build /app/.next /app/.next
 
 EXPOSE 3000
 
-COPY ./docker/next/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-RUN chmod +x /usr/local/bin/docker-entrypoint
+# COPY ./docker/next/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+# RUN chmod +x /usr/local/bin/docker-entrypoint
 
-ENTRYPOINT ["docker-entrypoint"]
+# ENTRYPOINT ["docker-entrypoint"]
 CMD ["npm" ,"run", "start"]

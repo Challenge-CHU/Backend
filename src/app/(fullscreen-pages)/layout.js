@@ -12,9 +12,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en" data-theme="mytheme">
-            <body className={inter.className + " bg-primary"}>
-                <p>LAYOUT FULL</p>
-
+            <body
+                className={
+                    inter.className +
+                    " bg-primary h-screen flex flex-col items-center justify-center p-24"
+                }
+            >
                 {children}
             </body>
         </html>
