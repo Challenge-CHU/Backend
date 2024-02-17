@@ -38,6 +38,10 @@
     background-color: #00b4ec !important;
 }
 
+.columns-2-custom {
+    grid-template-columns: 1fr 1fr;
+}
+
 @media (max-width: 768px) {
     /* Your mobile-specific styles here */
 

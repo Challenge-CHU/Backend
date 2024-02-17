@@ -2,10 +2,11 @@
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { Button } from "react-daisyui";
 import StatsCard from "../Stats/StatsCard";
+import DownloadChallengeDatas from "./DownloadChallengeDatas";
 
 const Challenge = ({ challenge }) => {
     return (
-        <div className="container mx-auto px-2 lg:px-24">
+        <div className="container mx-auto px-2 md:px-10 lg:px-24">
             <div className="flex justify-between items-center mb-10 bg-primary text-white px-0 lg:px-6 py-4 rounded-lg shadow-custom">
                 <Button aria-label="Challenge précédent" color="primary">
                     <FaArrowAltCircleLeft size={25} />
@@ -19,15 +20,15 @@ const Challenge = ({ challenge }) => {
                 </Button>
             </div>
 
-            <section className="flex lg:gap-10">
+            <section className="flex flex-col lg:flex-row gap-10">
                 <div className="lg:basis-1/2 flex flex-col gap-5">
-                    <button></button>
+                    <DownloadChallengeDatas challenge={challenge} />
                 </div>
-                <div className="lg:basis-1/2 flex flex-row flex-wrap gap-5">
-                    <StatsCard className="w-2/4" />
-                    <StatsCard className="w-2/4" />
-                    <StatsCard className="w-2/4" />
-                    <StatsCard className="w-2/4" />
+                <div className="lg:basis-1/2 grid columns-2-custom gap-5">
+                    <StatsCard />
+                    <StatsCard />
+                    <StatsCard />
+                    <StatsCard />
                 </div>
             </section>
         </div>
