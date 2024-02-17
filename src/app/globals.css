@@ -33,7 +33,10 @@
     background-color: #f5f5f5 !important;
 }
 
-.menu a:hover.active {
+.menu a:hover.active,
+.menu a:active.active,
+.menu a:focus.active,
+.menu a:focus-visible.active {
     color: white !important;
     background-color: #00b4ec !important;
 }
