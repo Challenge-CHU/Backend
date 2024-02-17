@@ -18,10 +18,15 @@ export default function RootLayout({ children }) {
             />
 
             <body
-                className={inter.className + " flex flex-nowrap min-h-screen"}
+                className={
+                    inter.className +
+                    " flex flex-col lg:flex-row lg:flex-nowrap min-h-screen"
+                }
             >
                 <Sidebar />
-                <main className="flex-1 p-10 bg-base-100">{children}</main>
+                <main className="flex-1 p-4 lg:p-10 bg-base-100">
+                    {children}
+                </main>
             </body>
         </html>
     );

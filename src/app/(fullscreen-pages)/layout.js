@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
             <body
                 className={
                     inter.className +
-                    " bg-primary h-screen flex flex-col items-center justify-center p-24"
+                    " bg-primary h-screen flex flex-col items-center justify-center px-4 lg:p-24"
                 }
             >
                 {children}

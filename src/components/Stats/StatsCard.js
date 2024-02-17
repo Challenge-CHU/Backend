@@ -6,7 +6,9 @@ const StatsCard = () => {
         <div className="stats shadow-custom w-full">
             <div className="stat">
                 <div className="stat-value text-secondary mb-4">89 400</div>
-                <div className="stat-title font-regular">Total Page Views</div>
+                <div className="stat-title font-regular text-black">
+                    Total Page Views
+                </div>
             </div>
         </div>
     );

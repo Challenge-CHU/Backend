@@ -9,3 +9,42 @@
 .shadow-custom {
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1) !important;
 }
+
+.menu a {
+    font-size: 16px;
+    font-weight: 600;
+    color: #317dba;
+    border-radius: 0;
+}
+
+.menu a.active {
+    font-size: 16px;
+    font-weight: 600;
+    color: white !important;
+    background-color: #00b4ec !important;
+    border-radius: 0;
+}
+
+.menu a:hover,
+.menu a:active,
+.menu a:focus,
+.menu a:focus-visible {
+    color: #00b4ec !important;
+    background-color: #f5f5f5 !important;
+}
+
+.menu a:hover.active {
+    color: white !important;
+    background-color: #00b4ec !important;
+}
+
+@media (max-width: 768px) {
+    /* Your mobile-specific styles here */
+
+    .logo-sidebar {
+        max-height: 50px;
+        height: auto;
+        object-fit: contain;
+        object-position: left;
+    }
+}
