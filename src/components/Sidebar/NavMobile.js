@@ -7,7 +7,6 @@ import { Button } from "react-daisyui";
 import { FaXmark } from "react-icons/fa6";
 
 const NavMobile = ({ showMenuMobile, setShowMenuMobile }) => {
-    console.log(showMenuMobile, setShowMenuMobile);
     return (
         <>
             {showMenuMobile && (

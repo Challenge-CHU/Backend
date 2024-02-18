@@ -2,10 +2,9 @@
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { Button } from "react-daisyui";
 import StatsCard from "../Global/StatsCard";
-import DownloadChallengeDatas from "./DownloadChallengeDatas";
 import { useEffect, useState } from "react";
 
-const Challenge = ({ challenges }) => {
+const Statistiques = ({ challenges }) => {
     const [challenge, setChallenge] = useState(null);
 
     useEffect(() => {
@@ -133,15 +132,13 @@ const Challenge = ({ challenges }) => {
                     </div>
 
                     <section className="flex flex-col lg:flex-row gap-10">
-                        <div className="lg:basis-1/2 flex flex-col gap-5">
-                            <DownloadChallengeDatas challenge={challenge} />
-                        </div>
                         <div className="lg:basis-1/2 grid columns-2-custom gap-5">
                             <StatsCard />
                             <StatsCard />
                             <StatsCard />
                             <StatsCard />
                         </div>
+                        <div className="lg:basis-1/2 flex flex-col gap-5"></div>
                     </section>
                 </div>
             ) : (
@@ -160,4 +157,4 @@ const Challenge = ({ challenges }) => {
     );
 };
 
-export default Challenge;
+export default Statistiques;

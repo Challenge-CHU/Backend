@@ -1,6 +1,6 @@
 import React from "react";
 import { FaDownload } from "react-icons/fa";
-import ButtonCard from "../Button/ButtonCard";
+import ButtonCard from "../Global/ButtonCard";
 
 const convertJSONtoCSV = (json) => {
     // Modèle de JSON attendu : const json = [ { "key1": "value1", "key2": "value2", "key3": "value3" }, { "key1": "value4", "key2": "value5", "key3": "value6" }, ... ];

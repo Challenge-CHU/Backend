@@ -6,17 +6,31 @@ export const metadata = {
     description: "Liste et gestion des challenges",
 };
 
-function getChallenge() {
-    return {
-        id: 1,
-        name: "Challenge 1",
-        startDate: "2024-02-01",
-        endDate: "2024-05-05",
-    };
+function getChallenges() {
+    return [
+        {
+            id: 1,
+            name: "Challenge 1",
+            startDate: "2023-02-01",
+            endDate: "2023-05-05",
+        },
+        {
+            id: 2,
+            name: "Challenge 2",
+            startDate: "2024-02-01",
+            endDate: "2024-05-05",
+        },
+        {
+            id: 3,
+            name: "Challenge 3",
+            startDate: "2025-02-01",
+            endDate: "2025-05-05",
+        },
+    ];
 }
 
 export default function Challenges() {
-    const challenge = getChallenge();
+    const challenges = getChallenges();
 
     return (
         <>
@@ -25,7 +39,7 @@ export default function Challenges() {
                 <ModalChallenge />
             </div>
 
-            <Challenge challenge={challenge} />
+            <Challenge challenges={challenges} />
         </>
     );
 }

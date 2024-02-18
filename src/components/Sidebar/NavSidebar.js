@@ -12,7 +12,6 @@ const NavSidebar = () => {
     useEffect(() => {
         // Récupérer l'URL de la page
         const currentUrl = window.location.pathname;
-        console.log(currentUrl);
         // Définir la valeur de activeLink en fonction de l'URL de la page
         setActiveLink(currentUrl);
     }, [pathname]);
