@@ -1,4 +1,4 @@
-import ModalChallenge from "@/components/Challenge/ModalChallenge";
+import ModalUser from "@/components/Users/ModalNewUser";
 import Challenge from "@/components/Challenge/Challenge";
 import UserTable from "@/components/Users/UserTable";
 
@@ -29,7 +29,7 @@ export default function Utilisateurs() {
         <>
             <div className="page-header flex justify-between items-center mb-10 ">
                 <h1 className="text-3xl font-bold">Utilisateurs</h1>
-                <ModalChallenge />
+                <ModalUser />
             </div>
 
             <UserTable users={users} />

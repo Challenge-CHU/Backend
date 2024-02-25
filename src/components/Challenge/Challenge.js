@@ -4,6 +4,7 @@ import { Button } from "react-daisyui";
 import StatsCard from "../Global/StatsCard";
 import DownloadChallengeDatas from "./DownloadChallengeDatas";
 import { useEffect, useState } from "react";
+import ModalChallenge from "./ModalChallenge";
 
 const Challenge = ({ challenges }) => {
     const [challenge, setChallenge] = useState(null);
@@ -88,7 +89,7 @@ const Challenge = ({ challenges }) => {
                                 />
                             </Button>
                         )}
-                        <h1 className="lg:text-2xl font-bold text-center">
+                        <h1 className="lg:text-2xl font-bold text-center flex items-center gap-2">
                             {challenge.name} du{" "}
                             {new Date(challenge.startDate).toLocaleDateString(
                                 "fr-FR",
@@ -134,6 +135,7 @@ const Challenge = ({ challenges }) => {
 
                     <section className="flex flex-col lg:flex-row gap-10">
                         <div className="lg:basis-1/2 flex flex-col gap-5">
+                            <ModalChallenge challenge={challenge} />
                             <DownloadChallengeDatas challenge={challenge} />
                         </div>
                         <div className="lg:basis-1/2 grid columns-2-custom gap-5">

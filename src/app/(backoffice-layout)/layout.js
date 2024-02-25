@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
                     " flex flex-col lg:flex-row lg:flex-nowrap min-h-screen"
                 }
             >
+                <Toaster position="top-right" />
                 <Sidebar />
                 <main className="flex-1 p-4 lg:p-10 bg-base-100">
                     {children}

@@ -44,6 +44,7 @@ const getChallengeCompleteDatas = async (challenge) => {
     //     return data;
     // } catch (error) {
     //     console.error(error);
+    //     toast.error("Une erreur est survenue");
     //     return [];
     // }
     return [
@@ -61,11 +62,10 @@ const getChallengeCompleteDatas = async (challenge) => {
 };
 
 const DownloadChallengeDatas = ({ challenge }) => {
-    const completeDatas = getChallengeCompleteDatas(challenge);
-
-    const downloadDatas = (datas) => {
+    const downloadDatas = async () => {
+        const completeDatas = await getChallengeCompleteDatas(challenge);
         // Convertir JSON en CSV
-        const csv = convertJSONtoCSV(datas);
+        const csv = convertJSONtoCSV(completeDatas);
 
         // Créer une URL Blob à partir du contenu CSV
         const blob = new Blob([csv], { type: "text/csv" });
@@ -85,7 +85,7 @@ const DownloadChallengeDatas = ({ challenge }) => {
 
     return (
         <ButtonCard
-            onClick={() => downloadDatas(completeDatas)}
+            onClick={() => downloadDatas()}
             icon={<FaDownload size={36} />}
             title="Télécharger les données brutes du challenge"
         />
