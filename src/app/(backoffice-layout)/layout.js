@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
-import { Theme } from "react-daisyui";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,9 +13,22 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en" data-theme="mytheme">
-            <body className={inter.className}>
-                <p>LAYOUT PAGE</p>
-                {children}
+            <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1"
+            />
+
+            <body
+                className={
+                    inter.className +
+                    " flex flex-col lg:flex-row lg:flex-nowrap min-h-screen"
+                }
+            >
+                <Toaster position="top-right" />
+                <Sidebar />
+                <main className="flex-1 p-4 lg:p-10 bg-base-100">
+                    {children}
+                </main>
             </body>
         </html>
     );
