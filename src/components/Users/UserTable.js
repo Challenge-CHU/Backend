@@ -16,6 +16,7 @@ import { Button } from "react-daisyui";
 import { FaEye, FaPen } from "react-icons/fa6";
 import ModalDelete from "./ModalDelete";
 import ModalEditUser from "./ModalEditUser";
+import Link from "next/link";
 
 const UserTable = ({ users }) => {
     const [page, setPage] = React.useState(1);
@@ -47,9 +48,12 @@ const UserTable = ({ users }) => {
             case "actions":
                 return (
                     <div className="relative flex items-center gap-2">
-                        <Button className="btn-secondary btn-xs text-white cursor-pointer active:opacity-50">
+                        <Link
+                            href={`/utilisateurs/${user.id}`}
+                            className=" btn btn-secondary btn-xs text-white cursor-pointer active:opacity-50"
+                        >
                             <FaEye /> Voir
-                        </Button>
+                        </Link>
                         <ModalEditUser user={user} />
                         <ModalDelete id={user.id} />
                     </div>
@@ -78,7 +82,7 @@ const UserTable = ({ users }) => {
         >
             <TableHeader>
                 <TableColumn key="avatar_id">Avatar</TableColumn>
-                <TableColumn key="identifier">Identifier</TableColumn>
+                <TableColumn key="identifier">Identifiant</TableColumn>
                 <TableColumn key="pseudo">Pseudo</TableColumn>
                 <TableColumn key="actions">Actions</TableColumn>
             </TableHeader>

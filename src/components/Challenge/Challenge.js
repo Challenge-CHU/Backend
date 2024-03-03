@@ -5,6 +5,7 @@ import StatsCard from "../Global/StatsCard";
 import DownloadChallengeDatas from "./DownloadChallengeDatas";
 import { useEffect, useState } from "react";
 import ModalChallenge from "./ModalChallenge";
+import GraphCard from "../Global/GraphCard";
 
 const Challenge = ({ challenges }) => {
     const [challenge, setChallenge] = useState(null);
@@ -134,15 +135,28 @@ const Challenge = ({ challenges }) => {
                     </div>
 
                     <section className="flex flex-col lg:flex-row gap-10">
-                        <div className="lg:basis-1/2 flex flex-col gap-5">
+                        <div className="lg:basis-1/2 flex flex-col gap-5  h-fit">
                             <ModalChallenge challenge={challenge} />
                             <DownloadChallengeDatas challenge={challenge} />
+                            <GraphCard
+                                title="Total pas par mois"
+                                type="line"
+                                datas={[650000, 540000, 520000, 430000]}
+                                max={1000000}
+                                labels={[
+                                    "Mars",
+                                    "Avril",
+                                    "Mai",
+                                    "Juin",
+                                    "Juillet",
+                                ]}
+                            />
                         </div>
-                        <div className="lg:basis-1/2 grid columns-2-custom gap-5">
-                            <StatsCard />
-                            <StatsCard />
-                            <StatsCard />
-                            <StatsCard />
+                        <div className="lg:basis-1/2 grid columns-2-custom gap-5 h-fit">
+                            <StatsCard label="Marcheurs" />
+                            <StatsCard label="Pas moyen par marcheur" />
+                            <StatsCard label="Nom de pas total" />
+                            <StatsCard label="Pas totaux par mois" />
                         </div>
                     </section>
                 </div>

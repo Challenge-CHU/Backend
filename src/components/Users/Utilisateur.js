@@ -2,11 +2,14 @@
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { Button } from "react-daisyui";
 import StatsCard from "../Global/StatsCard";
+// import DownloadUtilisateurDatas from "./DownloadUtilisateurDatas";
 import { useEffect, useState } from "react";
+import DownloadUtilisateurDatas from "./DownloadUtilisateurDatas";
 import GraphCard from "../Global/GraphCard";
 
-const Statistiques = ({ challenges }) => {
+const Utilisateur = ({ user }) => {
     const [challenge, setChallenge] = useState(null);
+    const { challenges } = user;
 
     useEffect(() => {
         if (challenges.length > 0) {
@@ -65,11 +68,11 @@ const Statistiques = ({ challenges }) => {
         <>
             {challenge ? (
                 <div className="container mx-auto px-2 md:px-10 lg:px-24">
-                    <div className="flex justify-between items-center mb-10 bg-primary text-white px-0 lg:px-6 py-4 rounded-lg shadow-custom">
+                    <div className="flex justify-between items-center mb-10 bg-white text-secondary px-0 lg:px-6 py-4 rounded-lg shadow-custom">
                         {hasPreviousChallenge() ? (
                             <Button
                                 aria-label="Challenge précédent"
-                                color="primary"
+                                className="btn btn-primary"
                                 onClick={() => previousChallenge()}
                             >
                                 <FaArrowAltCircleLeft size={25} />
@@ -83,12 +86,12 @@ const Statistiques = ({ challenges }) => {
                                 aria-label="Challenge précédent"
                             >
                                 <FaArrowAltCircleLeft
-                                    className="text-primary "
+                                    className="text-gray-200 "
                                     size={25}
                                 />
                             </Button>
                         )}
-                        <h1 className="lg:text-2xl font-bold text-center">
+                        <h1 className="lg:text-2xl font-bold text-center flex items-center gap-2">
                             {challenge.name} du{" "}
                             {new Date(challenge.startDate).toLocaleDateString(
                                 "fr-FR",
@@ -125,7 +128,7 @@ const Statistiques = ({ challenges }) => {
                                 aria-label="Challenge suivant"
                             >
                                 <FaArrowAltCircleRight
-                                    className="text-primary "
+                                    className="text-gray-200 "
                                     size={25}
                                 />
                             </Button>
@@ -134,23 +137,17 @@ const Statistiques = ({ challenges }) => {
 
                     <section className="flex flex-col lg:flex-row gap-10">
                         <div className="lg:basis-1/2 grid columns-2-custom gap-5">
-                            <StatsCard label="Connexions par jour" />
-                            <StatsCard label="Inscrits" />
-                        </div>
-                        <div className="lg:basis-1/2 flex flex-col gap-5">
-                            <GraphCard
-                                title="Connexions par mois"
-                                type="line"
-                                datas={[8000, 3000, 5000, 3000]}
-                                labels={[
-                                    "Mars",
-                                    "Avril",
-                                    "Mai",
-                                    "Juin",
-                                    "Juillet",
-                                ]}
-                                max={10000}
+                            <DownloadUtilisateurDatas
+                                user={user}
+                                userChallenge={challenge}
                             />
+                            <StatsCard label="Pas moyen par jour" />
+                            <GraphCard title="Pas par mois" />
+                        </div>
+                        <div className="lg:basis-1/2 grid columns-2-custom gap-5">
+                            <StatsCard label="Pas 7 derniers jours" />
+                            <StatsCard label="Pas totaux" />
+                            <GraphCard title="Pas par semaine" />
                         </div>
                     </section>
                 </div>
@@ -167,4 +164,4 @@ const Statistiques = ({ challenges }) => {
     );
 };
 
-export default Statistiques;
+export default Utilisateur;
