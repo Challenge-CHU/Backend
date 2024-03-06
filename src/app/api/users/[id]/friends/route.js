@@ -18,7 +18,6 @@ export async function GET(req, { params }) {
             },
         });
 
-
         return NextResponse.json({ data: friends }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error }, { status: 500 });

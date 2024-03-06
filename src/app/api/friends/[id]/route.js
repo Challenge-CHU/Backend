@@ -1,22 +1,17 @@
 import prisma from "@/utils/db";
 import {NextResponse} from "next/server";
 
-//Get all friends of a user
+//Get the link between two users
 export async function GET(req, { params }) {
-    const userId = params.id;
+    const id = params.id;
 
-    if (!userId) {
-        return NextResponse.json({ error: "Missing user ID" }, { status: 400 });
+    if (!id) {
+        return NextResponse.json({ error: "Missing link ID" }, { status: 400 });
     }
 
     try {
-        const friends = await prisma.userFriend.findMany({
-            where: {
-                OR: [
-                    { user_id: userId },
-                    { friend_id: userId },
-                ]
-            },
+        const friends = await prisma.userFriend.findUnique({
+            where: { id: id },
         });
 
         return NextResponse.json({ data: friends }, { status: 200 });
