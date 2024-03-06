@@ -19,7 +19,6 @@ export async function GET(req, { params }) {
 
         return NextResponse.json({data: step}, {status: 200});
     } catch (error) {
-        console.log(error);
         return NextResponse.json({error}, {status: 500});
     }
 }
