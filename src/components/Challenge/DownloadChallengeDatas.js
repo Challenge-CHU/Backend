@@ -30,7 +30,7 @@ const convertJSONtoCSV = (json) => {
 const getChallengeCompleteDatas = async (challenge) => {
     // try {
     //     // Faire une requête à l'API pour obtenir les données
-    //     const response = await fetch("https://api.example.com/challenge-data");
+    // const response = await fetch("http://localhost:3000/challenges/complete");
 
     //     // Vérifier si la requête a réussi
     //     if (!response.ok) {
@@ -49,9 +49,21 @@ const getChallengeCompleteDatas = async (challenge) => {
     // }
     return [
         {
-            key1: "value1",
-            key2: "value2",
-            key3: "value3",
+            user: {
+                id: 1,
+                pseudo: "user1",
+                identifier: "identifier1",
+            },
+            steps: [
+                {
+                    date: "2022-01-01",
+                    value: 1000,
+                },
+                {
+                    date: "2022-01-02",
+                    value: 2000,
+                },
+            ],
         },
         {
             key1: "value4",

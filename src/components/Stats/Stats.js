@@ -34,7 +34,7 @@ const Statistiques = ({ challenges }) => {
                 setChallenge(runningChallenge);
             }
         }
-    }, []);
+    }, [challenges]);
 
     useEffect(() => {}, [challenge]);
 

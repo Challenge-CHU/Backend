@@ -37,7 +37,7 @@ const Utilisateur = ({ user }) => {
                 setChallenge(runningChallenge);
             }
         }
-    }, []);
+    }, [challenges]);
 
     useEffect(() => {}, [challenge]);
 

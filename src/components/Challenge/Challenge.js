@@ -36,7 +36,7 @@ const Challenge = ({ challenges }) => {
                 setChallenge(runningChallenge);
             }
         }
-    }, []);
+    }, [challenges]);
 
     useEffect(() => {}, [challenge]);
 
