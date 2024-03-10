@@ -4,6 +4,7 @@ import { useRef, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaEdit, FaPlus } from "react-icons/fa";
 import ButtonCardSmall from "../Global/ButtonCardSmall";
+import { Toaster } from "react-hot-toast";
 
 const ModalChallenge = ({ challenge, onSave }) => {
     const ref = useRef(null);
@@ -28,6 +29,12 @@ const ModalChallenge = ({ challenge, onSave }) => {
         const name = nameChallengeRef.current.value;
         const startDate = startDateRef.current.value;
         const endDate = endDateRef.current.value;
+
+        // Check if startDate is before endDate
+        if (startDate >= endDate) {
+            toast.error("La date de début doit être avant la date de fin.");
+            return;
+        }
 
         const data = {
             name,

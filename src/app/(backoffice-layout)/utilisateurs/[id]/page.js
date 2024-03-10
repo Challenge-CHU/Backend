@@ -112,7 +112,7 @@ export default function Challenges() {
 
     return (
         <>
-            <div className="page-header flex justify-between items-center mb-10 ">
+            <div className="page-header flex flex-col md:flex-row md:justify-between gap-2 items-center mb-10 ">
                 <h1 className="text-3xl font-bold">
                     {user.identifier + " - " + user.pseudo}
                 </h1>

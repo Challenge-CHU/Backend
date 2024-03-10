@@ -24,11 +24,11 @@ export default function RootLayout({ children }) {
                     " flex flex-col lg:flex-row lg:flex-nowrap min-h-screen"
                 }
             >
-                <Toaster position="top-right" />
                 <Sidebar />
                 <main className="flex-1 p-4 lg:p-10 bg-base-100">
                     {children}
                 </main>
+                <Toaster className="toast" position="top-right" />
             </body>
         </html>
     );

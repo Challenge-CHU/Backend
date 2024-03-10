@@ -66,31 +66,9 @@ const Challenge = ({ challenges }) => {
     return (
         <>
             {challenge ? (
-                <div className="container mx-auto px-2 md:px-10 lg:px-24">
-                    <div className="flex justify-between items-center mb-10 bg-primary text-white px-0 lg:px-6 py-4 rounded-lg shadow-custom">
-                        {hasPreviousChallenge() ? (
-                            <Button
-                                aria-label="Challenge précédent"
-                                color="primary"
-                                onClick={() => previousChallenge()}
-                            >
-                                <FaArrowAltCircleLeft size={25} />
-                            </Button>
-                        ) : (
-                            <Button
-                                className="btn btn-primary btn-disabled"
-                                tabIndex={-1}
-                                role="button"
-                                aria-disabled="true"
-                                aria-label="Challenge précédent"
-                            >
-                                <FaArrowAltCircleLeft
-                                    className="text-primary "
-                                    size={25}
-                                />
-                            </Button>
-                        )}
-                        <h1 className="lg:text-2xl font-bold text-center flex items-center gap-2">
+                <div className="container mx-auto px-2 md:px-6 xl:px-24">
+                    <div className=" flex flex-row flex-wrap md:flex-nowrap justify-between items-center mb-5 bg-primary text-white gap-2 px-4 lg:px-6 py-4 rounded-lg shadow-custom">
+                        <h1 className="lg:text-2xl font-bold text-center flex justify-center items-center gap-2  w-full md:w-auto">
                             {challenge.name} du{" "}
                             {new Date(challenge.startDate).toLocaleDateString(
                                 "fr-FR",
@@ -110,32 +88,64 @@ const Challenge = ({ challenges }) => {
                                 }
                             )}
                         </h1>
+
+                        {hasPreviousChallenge() ? (
+                            <Button
+                                aria-label="Challenge précédent"
+                                className="btn btn-primary md:order-first"
+                                onClick={() => previousChallenge()}
+                            >
+                                <FaArrowAltCircleLeft size={25} />
+                                <span>Précédent</span>
+                            </Button>
+                        ) : (
+                            <Button
+                                className="btn btn-primary btn-disabled md:order-first"
+                                tabIndex={-1}
+                                role="button"
+                                aria-disabled="true"
+                                aria-label="Challenge précédent"
+                            >
+                                <FaArrowAltCircleLeft
+                                    className="text-gray-200 "
+                                    size={25}
+                                />
+                                <span className=" text-gray-200">
+                                    Précédent
+                                </span>
+                            </Button>
+                        )}
                         {hasNextChallenge() ? (
                             <Button
                                 aria-label="Challenge suivant"
                                 color="primary"
                                 onClick={() => nextChallenge()}
                             >
+                                <span>Suivant</span>
                                 <FaArrowAltCircleRight size={25} />
                             </Button>
                         ) : (
                             <Button
-                                className="btn btn-primary btn-disabled"
+                                className="btn btn-primary text-gray-200 btn-disabled"
                                 tabIndex={-1}
                                 role="button"
                                 aria-disabled="true"
                                 aria-label="Challenge suivant"
                             >
+                                <span className=" text-gray-200">Suivant</span>
                                 <FaArrowAltCircleRight
-                                    className="text-primary "
+                                    className="text-gray-200 "
                                     size={25}
                                 />
                             </Button>
                         )}
                     </div>
 
-                    <section className="flex flex-col lg:flex-row gap-10">
-                        <div className="lg:basis-1/2 flex flex-col gap-5  h-fit">
+                    <section
+                        key={challenge.id}
+                        className="anim-challenge grid grid-cols-2 gap-5"
+                    >
+                        <div className="col-span-2 lg:col-span-1 flex flex-col gap-5  h-fit">
                             <ModalChallenge challenge={challenge} />
                             <DownloadChallengeDatas challenge={challenge} />
                             <GraphCard
@@ -152,7 +162,7 @@ const Challenge = ({ challenges }) => {
                                 ]}
                             />
                         </div>
-                        <div className="lg:basis-1/2 grid columns-2-custom gap-5 h-fit">
+                        <div className="col-span-2 lg:col-span-1 grid columns-2-custom gap-5 h-fit">
                             <StatsCard label="Marcheurs" />
                             <StatsCard label="Pas moyen par marcheur" />
                             <StatsCard label="Nom de pas total" />

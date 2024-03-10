@@ -14,10 +14,12 @@ const ModalNewUser = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const identifier = identifierRef.current.value;
+        const identifiers = identifierRef.current.value
+            .split(",")
+            .map((identifier) => identifier.trim());
 
         const data = {
-            identifier,
+            identifiers,
         };
         console.log(data);
         ref.current?.close();
@@ -33,13 +35,13 @@ const ModalNewUser = () => {
             const responseData = await response.json();
             console.log(responseData);
             // Handle success
-            toast.success("Utilisateur ajouté avec succès !");
+            toast.success("Utilisateurs ajoutés avec succès !");
             ref.current?.close();
         } catch (error) {
             console.error(error);
             // Handle error
             toast.error(
-                "Une erreur s'est produite lors de l'ajout de l'utilisateur."
+                "Une erreur s'est produite lors de l'ajout des utilisateurs."
             );
         }
     };
@@ -48,29 +50,30 @@ const ModalNewUser = () => {
         <>
             <Button color="primary" size="sm" onClick={handleShow}>
                 <FaPlus className="mr-1" />
-                Nouvel utilisateur
+                Nouveaux utilisateurs
             </Button>
             <Modal ref={ref} className="">
                 <Modal.Header className="font-bold">
-                    Créer un nouvel utilisateur
+                    Créer de nouveaux utilisateurs
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="flex flex-col">
                             <label
-                                htmlFor="identifier"
+                                htmlFor="identifiers"
                                 className="text-sm font-medium text-gray-700"
                             >
-                                Identifiant :
+                                Identifiants (séparés par une virgule) :
                             </label>
-                            <input
-                                type="text"
-                                id="identifier"
-                                name="identifier"
+                            <textarea
+                                aria-label="identifiers"
+                                id="identifiers"
+                                name="identifiers"
                                 className="mt-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 ref={identifierRef}
                                 required
-                            />
+                                rows={10}
+                            ></textarea>
                         </div>
 
                         <div className="flex justify-end gap-2">
@@ -84,7 +87,7 @@ const ModalNewUser = () => {
                                 Annuler
                             </Button>
                             <Button size="sm" color="primary" type="submit">
-                                Créer l'utilisateur
+                                Créer les utilisateurs
                             </Button>
                         </div>
                     </form>

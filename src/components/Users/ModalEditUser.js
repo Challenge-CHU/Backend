@@ -47,7 +47,7 @@ const ModalEditUser = ({ user }) => {
     return (
         <>
             <Button
-                className="btn-secondary btn-xs text-white cursor-pointer active:opacity-50"
+                className="btn-outline btn-secondary btn-xs text-white cursor-pointer active:opacity-50"
                 onClick={handleShow}
             >
                 <FaPen /> Modifier utilisateur
