@@ -1,10 +1,12 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import prisma from "@/utils/db";
+import bcrypt from "bcrypt";
 
 const AuthOptions = {
+    pages: {
+        signIn: "/connexion",
+    },
     secret: process.env.NEXTAUTH_SECRET,
-    // pages: {
-    //     signIn: "/connexion",
-    // },
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -13,10 +15,10 @@ const AuthOptions = {
                 password: { label: "Password", type: "password" },
             },
             authorize: async (credentials) => {
-                console.log("credentials ===> ", credentials);
                 if (!credentials?.password || !credentials?.username) {
                     throw new Error("Invalid email or password");
                 }
+                console.log("credentials ===> ", credentials);
                 console.log(
                     "process.env.ADMIN_USERNAME ===> ",
                     process.env.ADMIN_USERNAME
@@ -37,23 +39,6 @@ const AuthOptions = {
         }),
     ],
     database: process.env.DATABASE_URL,
-    session: {
-        jwt: true,
-    },
-    callbacks: {
-        async jwt(token, user) {
-            if (user) {
-                token.id = user.id;
-                token.email = user.email;
-            }
-            return token;
-        },
-        async session(session, token) {
-            session.user.id = token.id;
-            session.user.email = token.email;
-            return session;
-        },
-    },
 };
 
 export default AuthOptions;

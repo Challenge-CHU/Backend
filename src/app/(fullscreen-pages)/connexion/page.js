@@ -32,6 +32,8 @@ export default function SignIn() {
                 const response = await signIn("credentials", {
                     username,
                     password,
+                    redirect: true,
+                    callbackUrl: "/",
                 });
                 // console.log(response);
                 if (response && response.status === 401) {

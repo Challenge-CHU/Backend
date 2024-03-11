@@ -16,12 +16,6 @@ const Challenge = ({ challenges }) => {
             const runningChallenge = challenges.find((c) => {
                 const startDate = new Date(c.start_date);
                 const endDate = new Date(c.end_date);
-                console.log("startDate");
-                console.log(startDate);
-                console.log("endDate");
-                console.log(endDate);
-                console.log("today");
-                console.log(today);
                 return today >= startDate && today <= endDate;
             });
             console.log("runningChallenge");
