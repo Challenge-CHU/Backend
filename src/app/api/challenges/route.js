@@ -1,5 +1,6 @@
 import prisma from "@/utils/db";
 import {NextResponse} from "next/server";
+import { hash } from "bcrypt";
 
 export async function GET() {
     try {
@@ -11,13 +12,14 @@ export async function GET() {
 }
 
 export async function POST(req) {
-    const { name, description, start_date, end_date } = await req.json();
+    const { name, description, start_date, end_date, password } = await req.json();
 
     try {
         const challenge = await prisma.challenge.create({
             data: {
                 name,
                 description,
+                password: await hash(password, 10),
                 start_date: new Date(start_date).toISOString(),
                 end_date: new Date(end_date).toISOString(),
             },
