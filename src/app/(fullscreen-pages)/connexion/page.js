@@ -30,8 +30,10 @@ export default function SignIn() {
         if (valid) {
             try {
                 const response = await signIn("credentials", {
+                    redirect: true,
                     username,
                     password,
+                    callbackUrl: "/",
                 });
                 // console.log(response);
                 if (response && response.status === 401) {
