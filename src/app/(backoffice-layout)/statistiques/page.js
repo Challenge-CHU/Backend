@@ -1,37 +1,20 @@
-import ModalChallenge from "@/components/Challenge/ModalChallenge";
-import Challenge from "@/components/Challenge/Challenge";
 import Stats from "@/components/Stats/Stats";
+import prisma from "@/utils/db";
 
 export const metadata = {
     title: "Challenges",
     description: "Liste et gestion des challenges",
 };
 
-function getChallenges() {
-    return [
-        {
-            id: 1,
-            name: "Challenge 1",
-            startDate: "2023-02-01",
-            endDate: "2023-05-05",
-        },
-        {
-            id: 2,
-            name: "Challenge 2",
-            startDate: "2024-02-01",
-            endDate: "2024-05-05",
-        },
-        {
-            id: 3,
-            name: "Challenge 3",
-            startDate: "2025-02-01",
-            endDate: "2025-05-05",
-        },
-    ];
+async function getChallenges() {
+    const challenges = await prisma.challenge.findMany({
+        sort: { end_date: "asc" },
+    });
+    return challenges;
 }
 
-export default function Statistiques() {
-    const challenges = getChallenges();
+export default async function Statistiques() {
+    const challenges = await getChallenges();
 
     return (
         <>

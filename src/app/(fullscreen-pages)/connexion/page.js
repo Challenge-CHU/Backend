@@ -7,18 +7,15 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function SignIn() {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
 
     const verifyData = async () => {
         const newErrors = [];
 
-        if (email === "" || password === "") {
+        if (username === "" || password === "") {
             newErrors.push("Veuillez remplir tous les champs");
-        }
-        if (!email.includes("@") || !email.includes(".")) {
-            newErrors.push("Veuillez entrer une adresse email valide");
         }
 
         setErrors(newErrors);
@@ -30,17 +27,16 @@ export default function SignIn() {
         setErrors([]);
 
         let valid = await verifyData();
-        // Call the Strapi API to login the user
         if (valid) {
             try {
                 const response = await signIn("credentials", {
-                    email,
+                    username,
                     password,
                 });
                 // console.log(response);
                 if (response && response.status === 401) {
                     // Handle invalid credentials error
-                    setErrors(["L'email ou le mot de passe est incorrect"]);
+                    setErrors(["L'username ou le mot de passe est incorrect"]);
                 } else {
                     // Handle other login errors
                     // console.log("An error occurred during login");
@@ -85,10 +81,10 @@ export default function SignIn() {
             >
                 <div className="flex flex-col w-full">
                     <label
-                        htmlFor="inputEmail"
+                        htmlFor="inputUsername"
                         className="label self-start font-semibold "
                     >
-                        <span className="label-text text-base">Email</span>
+                        <span className="label-text text-base">Username</span>
                     </label>
                     <Input
                         className={`input w-full ${
@@ -96,13 +92,13 @@ export default function SignIn() {
                                 ? "input-error"
                                 : ""
                         }`}
-                        name="email"
-                        id="email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        name="username"
+                        id="username"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
-                        placeholder="Entrez votre email"
+                        placeholder="Entrez votre username"
                     />
                 </div>
                 <div className="flex flex-col w-full">
