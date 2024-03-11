@@ -30,6 +30,7 @@ export default function SignIn() {
         if (valid) {
             try {
                 const response = await signIn("credentials", {
+                    redirect: true,
                     username,
                     password,
                     redirect: true,
