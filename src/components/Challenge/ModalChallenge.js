@@ -9,12 +9,16 @@ import { Toaster } from "react-hot-toast";
 const ModalChallenge = ({ challenge, onSave }) => {
     const ref = useRef(null);
     const nameChallengeRef = useRef(null);
+    const descriptionChallengeRef = useRef(null);
+    const passwordChallengeRef = useRef(null);
     const startDateRef = useRef(null);
     const endDateRef = useRef(null);
 
     useEffect(() => {
         if (challenge) {
             nameChallengeRef.current.value = challenge.name;
+            descriptionChallengeRef.current.value = challenge.description;
+            passwordChallengeRef.current.value = challenge.password;
             startDateRef.current.value = challenge.startDate;
             endDateRef.current.value = challenge.endDate;
         }
@@ -26,6 +30,8 @@ const ModalChallenge = ({ challenge, onSave }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const password = passwordChallengeRef.current.value;
+        const description = descriptionChallengeRef.current.value;
         const name = nameChallengeRef.current.value;
         const startDate = startDateRef.current.value;
         const endDate = endDateRef.current.value;
@@ -38,6 +44,8 @@ const ModalChallenge = ({ challenge, onSave }) => {
 
         const data = {
             name,
+            password,
+            description,
             startDate,
             endDate,
         };
@@ -113,6 +121,38 @@ const ModalChallenge = ({ challenge, onSave }) => {
                                 name="name"
                                 className="mt-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 ref={nameChallengeRef}
+                                required
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <label
+                                htmlFor="description"
+                                className="text-sm font-medium text-gray-700"
+                            >
+                                Nom :
+                            </label>
+                            <input
+                                type="text"
+                                id="description"
+                                name="description"
+                                className="mt-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                ref={descriptionChallengeRef}
+                                required
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <label
+                                htmlFor="password"
+                                className="text-sm font-medium text-gray-700"
+                            >
+                                Mot de passe :
+                            </label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                className="mt-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                ref={passwordChallengeRef}
                                 required
                             />
                         </div>
