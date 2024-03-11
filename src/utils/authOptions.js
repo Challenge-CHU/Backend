@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/utils/db";
 import bcrypt from "bcrypt";
+import { sign as jwtSign } from 'jsonwebtoken';
 
 const AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
@@ -24,7 +25,7 @@ const AuthOptions = {
 
                 return {
                     id: 1,
-                    username: process.env.ADMIN_USERNAME,
+                    name: process.env.ADMIN_USERNAME,
                 };
             }
         }),
@@ -62,34 +63,40 @@ const AuthOptions = {
                     throw new Error("Invalid identifier or challenge password");
                 }
 
-                return {
-                    id: user.id,
-                    identifier: user.identifier,
-
-                };
+                return user;
 
 
             }
         }
     ],
     database: process.env.DATABASE_URL,
-    session: {
-        jwt: true,
+    jwt: {
+        secret: process.env.JWT_SECRET,
     },
     callbacks: {
-        async jwt(token, user) {
+        async jwt({token, user}) {
             if (user) {
+                const encodedToken = jwtSign(
+                    {
+                        id: user.id,
+                        name: user.name,
+                    },
+                    process.env.JWT_SECRET,
+                    {
+                        expiresIn: "1h",
+                    }
+                );
+                token.jwt = encodedToken;
                 token.id = user.id;
-                token.email = user.email;
+                token.name = user.name;
             }
-            console.log("token ===> ", token);
             return token;
         },
-        async session(session, token) {
-            session.user.id = token.id;
-            session.user.email = token.email;
-            return session;
-        }
+        async session(session) {
+            console.log("session ===> ", session);
+            session.session.jwt = session.token.jwt;
+            return session.session;
+        },
     },
     pages: {
         signIn: "/connexion",
