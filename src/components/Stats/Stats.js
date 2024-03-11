@@ -12,26 +12,25 @@ const Statistiques = ({ challenges }) => {
         if (challenges.length > 0) {
             const today = new Date();
             const runningChallenge = challenges.find((c) => {
-                const startDate = new Date(c.startDate);
-                const endDate = new Date(c.endDate);
+                const startDate = new Date(c.start_date);
+                const endDate = new Date(c.end_date);
                 return today >= startDate && today <= endDate;
             });
-            console.log(runningChallenge);
             if (!runningChallenge) {
                 let lastRunningChallenge = null;
                 challenges.forEach((c) => {
-                    const endDate = new Date(c.endDate);
+                    const endDate = new Date(c.end_date);
                     if (
                         endDate <= today &&
                         (!lastRunningChallenge ||
-                            endDate > new Date(lastRunningChallenge.endDate))
+                            endDate > new Date(lastRunningChallenge.end_date))
                     ) {
                         lastRunningChallenge = c;
                     }
                 });
                 setChallenge(lastRunningChallenge);
             } else {
-                setChallenge(runningChallenge);
+                setChallenge(challenges[0]);
             }
         }
     }, [challenges]);
@@ -68,7 +67,7 @@ const Statistiques = ({ challenges }) => {
                     <div className=" flex flex-row flex-wrap md:flex-nowrap justify-between items-center mb-5 bg-primary text-white gap-2 px-4 lg:px-6 py-4 rounded-lg shadow-custom">
                         <h1 className="lg:text-2xl font-bold text-center">
                             {challenge.name} du{" "}
-                            {new Date(challenge.startDate).toLocaleDateString(
+                            {new Date(challenge.start_date).toLocaleDateString(
                                 "fr-FR",
                                 {
                                     day: "2-digit",
@@ -77,7 +76,7 @@ const Statistiques = ({ challenges }) => {
                                 }
                             )}{" "}
                             au{" "}
-                            {new Date(challenge.endDate).toLocaleDateString(
+                            {new Date(challenge.end_date).toLocaleDateString(
                                 "fr-FR",
                                 {
                                     day: "2-digit",

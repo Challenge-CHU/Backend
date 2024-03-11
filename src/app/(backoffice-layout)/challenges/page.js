@@ -8,7 +8,9 @@ export const metadata = {
 };
 
 async function getChallenges() {
-    const challenges = await prisma.challenge.findMany();
+    const challenges = await prisma.challenge.findMany({
+        orderBy: [{ end_date: "asc" }],
+    });
     return challenges;
 }
 
