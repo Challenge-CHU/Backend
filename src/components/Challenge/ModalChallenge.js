@@ -6,17 +6,25 @@ import { FaEdit, FaPlus } from "react-icons/fa";
 import ButtonCardSmall from "../Global/ButtonCardSmall";
 import { Toaster } from "react-hot-toast";
 
-const ModalChallenge = ({ challenge, onSave }) => {
+const ModalChallenge = ({ challenge }) => {
     const ref = useRef(null);
     const nameChallengeRef = useRef(null);
+    const descriptionChallengeRef = useRef(null);
+    const passwordChallengeRef = useRef(null);
     const startDateRef = useRef(null);
     const endDateRef = useRef(null);
 
     useEffect(() => {
         if (challenge) {
             nameChallengeRef.current.value = challenge.name;
-            startDateRef.current.value = challenge.startDate;
-            endDateRef.current.value = challenge.endDate;
+            descriptionChallengeRef.current.value = challenge.description;
+            passwordChallengeRef.current.value = challenge.password;
+            startDateRef.current.value = new Date(challenge.start_date)
+                .toISOString()
+                .split("T")[0];
+            endDateRef.current.value = new Date(challenge.end_date)
+                .toISOString()
+                .split("T")[0];
         }
     }, [challenge]);
 
@@ -26,21 +34,26 @@ const ModalChallenge = ({ challenge, onSave }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const password = passwordChallengeRef.current.value;
+        const description = descriptionChallengeRef.current.value;
         const name = nameChallengeRef.current.value;
-        const startDate = startDateRef.current.value;
-        const endDate = endDateRef.current.value;
+        const start_date = startDateRef.current.value;
+        const end_date = endDateRef.current.value;
 
         // Check if startDate is before endDate
-        if (startDate >= endDate) {
+        if (start_date >= end_date) {
             toast.error("La date de début doit être avant la date de fin.");
             return;
         }
 
         const data = {
             name,
-            startDate,
-            endDate,
+            password,
+            description,
+            start_date,
+            end_date,
         };
+
         console.log(data);
         ref.current?.close();
 
@@ -68,7 +81,6 @@ const ModalChallenge = ({ challenge, onSave }) => {
             // Handle success
             toast.success("Challenge ajouté avec succès !");
             ref.current?.close();
-            onSave();
         } catch (error) {
             console.error(error);
             // Handle error
@@ -105,7 +117,7 @@ const ModalChallenge = ({ challenge, onSave }) => {
                                 htmlFor="name"
                                 className="text-sm font-medium text-gray-700"
                             >
-                                Nom :
+                                Nom
                             </label>
                             <input
                                 type="text"
@@ -118,10 +130,42 @@ const ModalChallenge = ({ challenge, onSave }) => {
                         </div>
                         <div className="flex flex-col">
                             <label
+                                htmlFor="description"
+                                className="text-sm font-medium text-gray-700"
+                            >
+                                Description
+                            </label>
+                            <input
+                                type="text"
+                                id="description"
+                                name="description"
+                                className="mt-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                ref={descriptionChallengeRef}
+                                required
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <label
+                                htmlFor="password"
+                                className="text-sm font-medium text-gray-700"
+                            >
+                                Mot de passe
+                            </label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                className="mt-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                ref={passwordChallengeRef}
+                                required
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <label
                                 htmlFor="startDate"
                                 className="text-sm font-medium text-gray-700"
                             >
-                                Date de début :
+                                Date de début
                             </label>
                             <input
                                 type="date"
@@ -137,7 +181,7 @@ const ModalChallenge = ({ challenge, onSave }) => {
                                 htmlFor="endDate"
                                 className="text-sm font-medium text-gray-700"
                             >
-                                Date de fin :
+                                Date de fin
                             </label>
                             <input
                                 type="date"

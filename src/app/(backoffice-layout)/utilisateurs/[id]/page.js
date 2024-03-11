@@ -1,5 +1,4 @@
-import ModalChallenge from "@/components/Challenge/ModalChallenge";
-import Challenge from "@/components/Challenge/Challenge";
+import prisma from "@/utils/db";
 import Utilisateur from "@/components/Users/Utilisateur";
 
 export const metadata = {
@@ -7,108 +6,41 @@ export const metadata = {
     description: "Liste et gestion des challenges",
 };
 
-function getUser() {
-    return {
-        id: 1,
-        identifier: "identifiant123",
-        pseudo: "pseudo123",
-        firebase_device_token: "token123",
-        avatar_id: 1,
-        challenges: [
-            {
-                id: 1,
-                name: "Challenge 1",
-                startDate: "2023-02-01",
-                endDate: "2023-05-05",
-                userSteps: [
-                    {
-                        id: 1,
-                        step_count: 1000,
-                        date: "2024-02-01",
-                        user_id: 1,
-                        challenge_id: 1,
-                    },
-                    {
-                        id: 2,
-                        step_count: 2000,
-                        date: "2024-02-02",
-                        user_id: 1,
-                        challenge_id: 1,
-                    },
-                    {
-                        id: 3,
-                        step_count: 3000,
-                        date: "2024-02-03",
-                        user_id: 1,
-                        challenge_id: 1,
-                    },
-                ],
-            },
-            {
-                id: 2,
-                name: "Challenge 2",
-                startDate: "2024-02-01",
-                endDate: "2024-05-05",
-                userSteps: [
-                    {
-                        id: 1,
-                        step_count: 1000,
-                        date: "2024-02-01",
-                        user_id: 1,
-                        challenge_id: 1,
-                    },
-                    {
-                        id: 2,
-                        step_count: 2000,
-                        date: "2024-02-02",
-                        user_id: 1,
-                        challenge_id: 1,
-                    },
-                    {
-                        id: 3,
-                        step_count: 3000,
-                        date: "2024-02-03",
-                        user_id: 1,
-                        challenge_id: 1,
-                    },
-                ],
-            },
-            {
-                id: 3,
-                name: "Challenge 3",
-                startDate: "2025-02-01",
-                endDate: "2025-05-05",
+async function getChallengesDatas(userId) {
+    const challenges = await prisma.challenge.findMany();
 
-                userSteps: [
-                    {
-                        id: 1,
-                        step_count: 1000,
-                        date: "2024-02-01",
-                        user_id: 1,
-                        challenge_id: 1,
-                    },
-                    {
-                        id: 2,
-                        step_count: 2000,
-                        date: "2024-02-02",
-                        user_id: 1,
-                        challenge_id: 1,
-                    },
-                    {
-                        id: 3,
-                        step_count: 3000,
-                        date: "2024-02-03",
-                        user_id: 1,
-                        challenge_id: 1,
-                    },
-                ],
+    for (const challenge of challenges) {
+        const userSteps = await prisma.step.findMany({
+            where: {
+                challenge_id: challenge.id,
+                user_id: userId,
             },
-        ],
-    };
+        });
+        challenge.userSteps = userSteps;
+    }
+
+    return challenges;
 }
 
-export default function Challenges() {
-    const user = getUser();
+async function getUser(id) {
+    const user = prisma.user.findUnique({
+        where: {
+            id: id,
+        },
+        include: {},
+    });
+
+    return user;
+}
+
+export default async function UtilisateurPage({ params }) {
+    const user = await getUser(params.id);
+    const challenges = await getChallengesDatas(params.id);
+
+    user.challenges = challenges;
+
+    console.log("USER");
+    console.log(user);
 
     return (
         <>
