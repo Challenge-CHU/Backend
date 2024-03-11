@@ -50,7 +50,7 @@ const ModalEditUser = ({ user }) => {
                 className="btn-outline btn-secondary btn-xs text-white cursor-pointer active:opacity-50"
                 onClick={handleShow}
             >
-                <FaPen /> Modifier utilisateur
+                <FaPen /> Modifier
             </Button>
             <Modal ref={ref} className="">
                 <Modal.Header className="font-bold">
