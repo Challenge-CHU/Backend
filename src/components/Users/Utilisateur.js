@@ -2,13 +2,14 @@
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { Button } from "react-daisyui";
 import StatsCard from "../Global/StatsCard";
-import DownloadChallengeDatas from "./DownloadChallengeDatas";
+// import DownloadUtilisateurDatas from "./DownloadUtilisateurDatas";
 import { useEffect, useState } from "react";
-import ModalChallenge from "./ModalChallenge";
+import DownloadUtilisateurDatas from "./DownloadUtilisateurDatas";
 import GraphCard from "../Global/GraphCard";
 
-const Challenge = ({ challenges }) => {
+const Utilisateur = ({ user }) => {
     const [challenge, setChallenge] = useState(null);
+    const { challenges } = user;
 
     useEffect(() => {
         if (challenges.length > 0) {
@@ -67,8 +68,8 @@ const Challenge = ({ challenges }) => {
         <>
             {challenge ? (
                 <div className="container mx-auto px-2 md:px-6 xl:px-24">
-                    <div className=" flex flex-row flex-wrap md:flex-nowrap justify-between items-center mb-5 bg-primary text-white gap-2 px-4 lg:px-6 py-4 rounded-lg shadow-custom">
-                        <h1 className="lg:text-2xl font-bold text-center flex justify-center items-center gap-2  w-full md:w-auto">
+                    <div className=" flex flex-row flex-wrap md:flex-nowrap justify-between items-center mb-5 bg-white text-secondary gap-2 px-4 lg:px-6 py-4 rounded-lg shadow-custom">
+                        <h1 className="lg:text-2xl font-bold text-center flex items-center gap-2">
                             {challenge.name} du{" "}
                             {new Date(challenge.startDate).toLocaleDateString(
                                 "fr-FR",
@@ -88,7 +89,6 @@ const Challenge = ({ challenges }) => {
                                 }
                             )}
                         </h1>
-
                         {hasPreviousChallenge() ? (
                             <Button
                                 aria-label="Challenge précédent"
@@ -143,30 +143,20 @@ const Challenge = ({ challenges }) => {
 
                     <section
                         key={challenge.id}
-                        className="anim-challenge grid grid-cols-2 gap-5"
+                        className="anim-challenge flex flex-col xl:flex-row gap-5"
                     >
-                        <div className="col-span-2 lg:col-span-1 flex flex-col gap-5  h-fit">
-                            <ModalChallenge challenge={challenge} />
-                            <DownloadChallengeDatas challenge={challenge} />
-                            <GraphCard
-                                title="Total pas par mois"
-                                type="line"
-                                datas={[650000, 540000, 520000, 430000]}
-                                max={1000000}
-                                labels={[
-                                    "Mars",
-                                    "Avril",
-                                    "Mai",
-                                    "Juin",
-                                    "Juillet",
-                                ]}
+                        <div className="w-full lg:basis-1/2 grid columns-2-custom gap-5">
+                            <DownloadUtilisateurDatas
+                                user={user}
+                                userChallenge={challenge}
                             />
+                            <StatsCard label="Pas moyen par jour" />
+                            <GraphCard title="Pas par mois" />
                         </div>
-                        <div className="col-span-2 lg:col-span-1 grid columns-2-custom gap-5 h-fit">
-                            <StatsCard label="Marcheurs" />
-                            <StatsCard label="Pas moyen par marcheur" />
-                            <StatsCard label="Nom de pas total" />
-                            <StatsCard label="Pas totaux par mois" />
+                        <div className="w-full lg:basis-1/2 grid columns-2-custom gap-5">
+                            <StatsCard label="Pas 7 derniers jours" />
+                            <StatsCard label="Pas totaux" />
+                            <GraphCard title="Pas par semaine" />
                         </div>
                     </section>
                 </div>
@@ -176,9 +166,6 @@ const Challenge = ({ challenges }) => {
                         <h1 className="lg:text-2xl font-bold text-center">
                             Aucun challenge défini
                         </h1>
-                        <p className="text-center text-black">
-                            Définissez un nouveau challenge
-                        </p>
                     </div>
                 </div>
             )}
@@ -186,4 +173,4 @@ const Challenge = ({ challenges }) => {
     );
 };
 
-export default Challenge;
+export default Utilisateur;

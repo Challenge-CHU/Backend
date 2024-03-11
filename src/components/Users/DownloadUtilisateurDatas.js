@@ -27,10 +27,10 @@ const convertJSONtoCSV = (json) => {
 };
 
 // Obtenir les données complètes d'un challenge
-const getChallengeCompleteDatas = async (challenge) => {
+const getChallengeCompleteDatas = async (user) => {
     // try {
     //     // Faire une requête à l'API pour obtenir les données
-    // const response = await fetch("http://localhost:3000/challenges/complete");
+    //     const response = await fetch("https://api.example.com/challenge-data");
 
     //     // Vérifier si la requête a réussi
     //     if (!response.ok) {
@@ -49,21 +49,9 @@ const getChallengeCompleteDatas = async (challenge) => {
     // }
     return [
         {
-            user: {
-                id: 1,
-                pseudo: "user1",
-                identifier: "identifier1",
-            },
-            steps: [
-                {
-                    date: "2022-01-01",
-                    value: 1000,
-                },
-                {
-                    date: "2022-01-02",
-                    value: 2000,
-                },
-            ],
+            key1: "value1",
+            key2: "value2",
+            key3: "value3",
         },
         {
             key1: "value4",
@@ -73,7 +61,7 @@ const getChallengeCompleteDatas = async (challenge) => {
     ];
 };
 
-const DownloadChallengeDatas = ({ challenge }) => {
+const DownloadUtilisateurDatas = ({ challenge }) => {
     const downloadDatas = async () => {
         const completeDatas = await getChallengeCompleteDatas(challenge);
         // Convertir JSON en CSV
@@ -99,9 +87,9 @@ const DownloadChallengeDatas = ({ challenge }) => {
         <ButtonCard
             onClick={() => downloadDatas()}
             icon={<FaDownload size={36} />}
-            title="Télécharger les données brutes du challenge"
+            title="Télécharger les données brutes de l’utilisateur"
         />
     );
 };
 
-export default DownloadChallengeDatas;
+export default DownloadUtilisateurDatas;

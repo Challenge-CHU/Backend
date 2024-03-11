@@ -2,7 +2,7 @@
 import { Modal, Button } from "react-daisyui";
 import { useRef, useCallback } from "react";
 import toast from "react-hot-toast";
-import { FaPlus } from "react-icons/fa6";
+import { FaPen } from "react-icons/fa6";
 
 const ModalEditUser = ({ user }) => {
     const ref = useRef(null);
@@ -47,10 +47,10 @@ const ModalEditUser = ({ user }) => {
     return (
         <>
             <Button
-                className="btn-secondary btn-xs text-white cursor-pointer active:opacity-50"
+                className="btn-outline btn-secondary btn-xs text-white cursor-pointer active:opacity-50"
                 onClick={handleShow}
             >
-                <FaPlus /> Modifier utilisateur
+                <FaPen /> Modifier
             </Button>
             <Modal ref={ref} className="">
                 <Modal.Header className="font-bold">
