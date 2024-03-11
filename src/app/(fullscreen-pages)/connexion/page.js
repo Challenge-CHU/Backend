@@ -33,6 +33,7 @@ export default function SignIn() {
                     redirect: true,
                     username,
                     password,
+                    redirect: true,
                     callbackUrl: "/",
                 });
                 // console.log(response);
