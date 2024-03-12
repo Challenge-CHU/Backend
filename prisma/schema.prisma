@@ -36,6 +36,7 @@ model Challenge {
   id          String      @id @default(uuid())
   name        String      @db.VarChar(50)
   description String
+  password    String
   start_date  DateTime
   end_date    DateTime
   steps       Step[]
