@@ -33,7 +33,19 @@ export default async function RootLayout({ children }) {
                 <main className="flex-1 p-4 lg:p-10 bg-base-100">
                     {children}
                 </main>
-                <Toaster className="toast" position="top-right" />
+                <Toaster
+                    containerStyle={{
+                        zIndex: "99999 !important",
+                    }}
+                    toastOptions={{
+                        className: "react-hot-toast",
+                        style: {
+                            zIndex: "99999 !important",
+                        },
+                    }}
+                    className="toast"
+                    position="top-center"
+                />
             </body>
         </html>
     );
