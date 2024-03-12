@@ -21,6 +21,7 @@ model User {
   firebase_device_token String?
   avatar_id             String?
   Steps                 Step[]
+  streak                Int                 @default(0)
   UserBadge             UserBadge[]
   Friends               UserFriend[] @relation(name: "UserFriendUser")
   FriendOf              UserFriend[] @relation(name: "UserFriendFriend")
