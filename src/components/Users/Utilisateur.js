@@ -10,6 +10,11 @@ import GraphCard from "../Global/GraphCard";
 const Utilisateur = ({ user }) => {
     const [challenge, setChallenge] = useState(null);
     const { challenges } = user;
+    const [challengeStats, setChallengeStats] = useState(null);
+    const [graphWeeks, setGraphWeeks] = useState([]);
+    const [graphSteps, setGraphSteps] = useState([]);
+    const [maxSteps, setMaxSteps] = useState(0);
+    const [stepSize, setStepSize] = useState(0);
 
     useEffect(() => {
         if (challenges.length > 0) {
@@ -61,6 +66,82 @@ const Utilisateur = ({ user }) => {
     const hasPreviousChallenge = () => {
         const index = challenges.indexOf(challenge);
         return index > 0;
+    };
+
+    const getChallengeStats = async (challenge, user) => {
+        try {
+            const response = await fetch(
+                "/api/users/" + user.id + "/stats/" + challenge.id
+            );
+            if (!response.ok) {
+                throw new Error("Failed to fetch challenge stats");
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    };
+
+    useEffect(() => {
+        if (challenge) {
+            const fetchData = async () => {
+                const challengeStatsDatas = await getChallengeStats(
+                    challenge,
+                    user
+                );
+                console.log("challengeStatsDatas");
+                console.log(challengeStatsDatas.data);
+                setChallengeStats(challengeStatsDatas.data);
+                setGraphWeeks(
+                    challengeStatsDatas.data.challengesWeeks.map((week) => {
+                        return "S" + week.week;
+                    })
+                );
+                setGraphSteps(
+                    challengeStatsDatas.data.challengesWeeks.map((week) => {
+                        return week.weekSteps;
+                    })
+                );
+                let max = Math.max(
+                    ...challengeStatsDatas.data.challengesWeeks.map(
+                        (week) => week.weekSteps
+                    )
+                );
+                if (max > 10000 && max < 1000000) {
+                    console.log("max");
+                    max = max / 10000;
+                    max = Math.round(max * 1.4) * 10000;
+                } else if (max >= 1000000) {
+                    console.log("max2");
+                    max = max / 100000;
+                    max = Math.round(max * 1.4) * 100000;
+                } else {
+                    max = Math.round(max * 1.4);
+                }
+
+                setMaxSteps(max < 10000 ? 10000 : max);
+                setStepSize(Math.round(max / 5));
+            };
+
+            fetchData();
+        }
+    }, [challenge]);
+
+    useEffect(() => {
+        console.log("challengeStats");
+        console.log(challengeStats);
+        console.log("graphWeeks");
+        console.log(graphWeeks);
+        console.log("graphSteps");
+        console.log(graphSteps);
+        console.log("maxSteps");
+        console.log(maxSteps);
+    }, [challengeStats, graphWeeks, graphSteps, maxSteps, challenge]);
+
+    const formatNumber = (number) => {
+        return new Intl.NumberFormat("fr-FR").format(number);
     };
 
     return (
@@ -144,18 +225,67 @@ const Utilisateur = ({ user }) => {
                         key={challenge.id}
                         className="anim-challenge flex flex-col xl:flex-row gap-5"
                     >
-                        <div className="w-full lg:basis-1/2 grid columns-2-custom gap-5">
+                        <div className="col-span-2 lg:col-span-1 flex flex-col gap-5  h-fit">
                             <DownloadUtilisateurDatas
                                 user={user}
                                 challenge={challenge}
                             />
-                            <StatsCard label="Pas moyen par jour" />
-                            <GraphCard title="Pas par mois" />
+                            <GraphCard
+                                title="Pas par semaine"
+                                type="line"
+                                datas={graphSteps}
+                                max={maxSteps}
+                                labels={graphWeeks}
+                                stepSize={stepSize}
+                            />
                         </div>
-                        <div className="w-full lg:basis-1/2 grid columns-2-custom gap-5">
-                            <StatsCard label="Pas 7 derniers jours" />
-                            <StatsCard label="Pas totaux" />
-                            <GraphCard title="Pas par semaine" />
+                        <div className="w-full lg:basis-1/2 grid columns-2-custom gap-5 h-fit">
+                            <StatsCard
+                                label="Pas moyen par jour"
+                                value={
+                                    challengeStats
+                                        ? formatNumber(
+                                              challengeStats.averageSteps
+                                          )
+                                        : "-"
+                                }
+                            />
+                            <StatsCard
+                                label="Pas totaux"
+                                value={
+                                    challengeStats
+                                        ? formatNumber(
+                                              challengeStats.totalSteps
+                                          )
+                                        : "-"
+                                }
+                            />
+
+                            {challengeStats &&
+                            challengeStats.challengeIsRunning ? (
+                                <>
+                                    <StatsCard
+                                        label="Pas aujourd'hui"
+                                        value={
+                                            challengeStats
+                                                ? formatNumber(
+                                                      challengeStats.todaySteps
+                                                  )
+                                                : "-"
+                                        }
+                                    />
+                                    <StatsCard
+                                        label="Pas les 7 derniers jours"
+                                        value={
+                                            challengeStats
+                                                ? formatNumber(
+                                                      challengeStats.last7daysSteps
+                                                  )
+                                                : "-"
+                                        }
+                                    />
+                                </>
+                            ) : null}
                         </div>
                     </section>
                 </div>

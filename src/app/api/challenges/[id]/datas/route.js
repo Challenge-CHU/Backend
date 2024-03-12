@@ -65,16 +65,17 @@ export async function GET(req, { params }) {
             challengeDatas = users.map((user) => {
                 const challengeData = {
                     userIdentifier: user.identifier,
+                    total: 0,
+                    average: 0,
                 };
 
                 user.Steps.forEach((step) => {
-                    challengeData[step.date.toISOString().split("T")[0]] =
-                        step.step_count;
+                    const stepDate = step.date.toISOString().split("T")[0];
+                    if (stepDate >= startDate && stepDate <= endDate) {
+                        challengeData[stepDate] = step.step_count;
+                        challengeData.total += step.step_count;
+                    }
                 });
-                challengeData.total = user.Steps.reduce(
-                    (acc, step) => acc + step.step_count,
-                    0
-                );
                 challengeData.average = Math.floor(
                     challengeData.total / (Difference_In_Days + 1)
                 );

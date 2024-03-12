@@ -9,6 +9,11 @@ import GraphCard from "../Global/GraphCard";
 
 const Challenge = ({ challenges }) => {
     const [challenge, setChallenge] = useState(null);
+    const [challengeStats, setChallengeStats] = useState(null);
+    const [graphWeeks, setGraphWeeks] = useState([]);
+    const [graphSteps, setGraphSteps] = useState([]);
+    const [maxSteps, setMaxSteps] = useState(0);
+    const [stepSize, setStepSize] = useState(0);
 
     useEffect(() => {
         if (challenges.length > 0) {
@@ -18,8 +23,6 @@ const Challenge = ({ challenges }) => {
                 const endDate = new Date(c.end_date);
                 return today >= startDate && today <= endDate;
             });
-            console.log("runningChallenge");
-            console.log(runningChallenge);
 
             if (!runningChallenge) {
                 let lastRunningChallenge = null;
@@ -40,7 +43,70 @@ const Challenge = ({ challenges }) => {
         }
     }, [challenges]);
 
-    useEffect(() => {}, [challenge]);
+    const getChallengeStats = async (challenge) => {
+        try {
+            const response = await fetch(
+                "/api/challenges/" + challenge.id + "/stats"
+            );
+            if (!response.ok) {
+                throw new Error("Failed to fetch challenge stats");
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    };
+
+    useEffect(() => {
+        if (challenge) {
+            const fetchData = async () => {
+                const challengeStatsDatas = await getChallengeStats(challenge);
+                setChallengeStats(challengeStatsDatas.data);
+                setGraphWeeks(
+                    challengeStatsDatas.data.challengesWeeks.map((week) => {
+                        return "S" + week.week;
+                    })
+                );
+                setGraphSteps(
+                    challengeStatsDatas.data.challengesWeeks.map((week) => {
+                        return week.weekSteps;
+                    })
+                );
+
+                let max = Math.max(
+                    ...challengeStatsDatas.data.challengesWeeks.map(
+                        (week) => week.weekSteps
+                    )
+                );
+                if (max > 10000 && max < 1000000) {
+                    console.log("max");
+                    max = max / 10000;
+                    max = Math.round(max * 1.4) * 10000;
+                } else if (max >= 1000000) {
+                    console.log("max2");
+                    max = max / 100000;
+                    max = Math.round(max * 1.4) * 100000;
+                } else {
+                    max = Math.round(max * 1.4);
+                }
+
+                setMaxSteps(max < 10000 ? 10000 : max);
+                setStepSize(Math.round(max / 5));
+            };
+
+            fetchData();
+        }
+    }, [challenge]);
+
+    useEffect(() => {}, [
+        challengeStats,
+        graphWeeks,
+        graphSteps,
+        maxSteps,
+        challenge,
+    ]);
 
     const previousChallenge = () => {
         const index = challenges.indexOf(challenge);
@@ -63,6 +129,10 @@ const Challenge = ({ challenges }) => {
     const hasPreviousChallenge = () => {
         const index = challenges.indexOf(challenge);
         return index > 0;
+    };
+
+    const formatNumber = (number) => {
+        return new Intl.NumberFormat("fr-FR").format(number);
     };
 
     return (
@@ -151,24 +221,80 @@ const Challenge = ({ challenges }) => {
                             <ModalChallenge challenge={challenge} />
                             <DownloadChallengeDatas challenge={challenge} />
                             <GraphCard
-                                title="Total pas par mois"
+                                title="Total pas par semaine"
                                 type="line"
-                                datas={[650000, 540000, 520000, 430000]}
-                                max={1000000}
-                                labels={[
-                                    "Mars",
-                                    "Avril",
-                                    "Mai",
-                                    "Juin",
-                                    "Juillet",
-                                ]}
+                                datas={graphSteps}
+                                max={maxSteps}
+                                labels={graphWeeks}
+                                stepSize={stepSize}
                             />
                         </div>
                         <div className="col-span-2 lg:col-span-1 grid columns-2-custom gap-5 h-fit">
-                            <StatsCard label="Marcheurs" />
-                            <StatsCard label="Pas moyen par marcheur" />
-                            <StatsCard label="Nom de pas total" />
-                            <StatsCard label="Pas totaux par mois" />
+                            <StatsCard
+                                label="Marcheurs"
+                                value={
+                                    challengeStats
+                                        ? formatNumber(
+                                              challengeStats.numberOfUsers
+                                          )
+                                        : "-"
+                                }
+                            />
+                            <StatsCard
+                                label="Pas moyen par marcheur"
+                                value={
+                                    challengeStats
+                                        ? formatNumber(
+                                              challengeStats.averageStepsPerUser
+                                          )
+                                        : "-"
+                                }
+                            />
+                            <StatsCard
+                                label="Pas par marcheur par jour"
+                                value={
+                                    challengeStats
+                                        ? formatNumber(
+                                              challengeStats.averageStepsPerDayAndPerUser
+                                          )
+                                        : "-"
+                                }
+                            />
+                            <StatsCard
+                                label="Pas totaux"
+                                value={
+                                    challengeStats
+                                        ? formatNumber(
+                                              challengeStats.totalSteps
+                                          )
+                                        : "-"
+                                }
+                            />
+                            {challengeStats &&
+                            challengeStats.challengeIsRunning ? (
+                                <>
+                                    <StatsCard
+                                        label="Pas aujourd'hui"
+                                        value={
+                                            challengeStats
+                                                ? formatNumber(
+                                                      challengeStats.todaySteps
+                                                  )
+                                                : "-"
+                                        }
+                                    />
+                                    <StatsCard
+                                        label="Pas les 7 derniers jours"
+                                        value={
+                                            challengeStats
+                                                ? formatNumber(
+                                                      challengeStats.last7daysSteps
+                                                  )
+                                                : "-"
+                                        }
+                                    />
+                                </>
+                            ) : null}
                         </div>
                     </section>
                 </div>
