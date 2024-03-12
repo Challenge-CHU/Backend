@@ -147,7 +147,7 @@ const Utilisateur = ({ user }) => {
                         <div className="w-full lg:basis-1/2 grid columns-2-custom gap-5">
                             <DownloadUtilisateurDatas
                                 user={user}
-                                userChallenge={challenge}
+                                challenge={challenge}
                             />
                             <StatsCard label="Pas moyen par jour" />
                             <GraphCard title="Pas par mois" />

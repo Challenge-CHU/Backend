@@ -1,13 +1,13 @@
 import prisma from "@/utils/db";
-import {NextResponse} from "next/server";
+import { NextResponse } from "next/server";
 import dayjs from "dayjs";
 
 export async function GET() {
     try {
         const steps = await prisma.step.findMany();
-        return NextResponse.json({data: steps}, { status: 200 });
+        return NextResponse.json({ data: steps }, { status: 200 });
     } catch (error) {
-        return NextResponse.json({error}, { status: 500 });
+        return NextResponse.json({ error }, { status: 500 });
     }
 }
 
@@ -25,9 +25,9 @@ export async function POST(req) {
             },
         });
 
-        return NextResponse.json({data: step}, { status: 201 });
+        return NextResponse.json({ data: step }, { status: 201 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({error}, { status: 500 });
+        return NextResponse.json({ error }, { status: 500 });
     }
 }
