@@ -20,7 +20,7 @@ const authenticateUser = async (identifier, challenge_id, firebase_device_token)
 		const challenge = await prisma.challenge.findUnique({
 			where: { id: challenge_id }
 		})
-		console.log(challenge);
+		// console.log(challenge);
 		const isBetweenDates = new Date() >= new Date(challenge.start_date) && new Date() <= new Date(challenge.end_date);
 
 		if(!isBetweenDates) {

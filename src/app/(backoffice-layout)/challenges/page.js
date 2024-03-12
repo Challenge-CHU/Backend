@@ -16,8 +16,8 @@ async function getChallenges() {
 
 export default async function Challenges() {
     const challenges = await getChallenges();
-    console.log("CHALLENGES");
-    console.log(challenges);
+    // console.log("CHALLENGES");
+    // console.log(challenges);
 
     return (
         <>
