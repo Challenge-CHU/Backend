@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {
     const challengeId = params.id;
-    console.log(challengeId);
 
     const startDate = req.nextUrl.searchParams.get("start_date");
     const endDate = req.nextUrl.searchParams.get("end_date");
@@ -59,17 +58,6 @@ export async function GET(req, { params }) {
                 Difference_In_Time / (1000 * 3600 * 24)
             );
 
-            // To display the final no. of days (result)
-            console.log(
-                "Total number of days between dates:\n" +
-                    date1.toDateString() +
-                    " and " +
-                    date2.toDateString() +
-                    " is: " +
-                    Difference_In_Days +
-                    " days"
-            );
-
             challenge.users = users;
 
             let challengeDatas = [];
@@ -87,7 +75,6 @@ export async function GET(req, { params }) {
                     (acc, step) => acc + step.step_count,
                     0
                 );
-                console.log(challengeData.total / (Difference_In_Days + 1));
                 challengeData.average = Math.floor(
                     challengeData.total / (Difference_In_Days + 1)
                 );

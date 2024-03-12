@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 export async function GET(req, { params }) {
     const userId = params.id;
     const challengeId = params.challenge_id;
-    console.log(userId);
 
     const startDate = req.nextUrl.searchParams.get("start_date");
     const endDate = req.nextUrl.searchParams.get("end_date");
@@ -82,7 +81,6 @@ export async function GET(req, { params }) {
             (acc, step) => acc + step.step_count,
             0
         );
-        console.log(challengeData.total / (Difference_In_Days + 1));
         challengeData.average = Math.floor(
             challengeData.total / (Difference_In_Days + 1)
         );
