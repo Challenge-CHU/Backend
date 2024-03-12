@@ -8,9 +8,7 @@ const StatsCard = ({ label = "Label", value = "20000" }) => {
                 <div className="stat-value text-secondary mb-2 xl:mb-4 text-2xl xl:text-3xl">
                     {value}
                 </div>
-                <div className="stat-title font-regular text-black ">
-                    {label}
-                </div>
+                <div className=" font-regular text-black ">{label}</div>
             </div>
         </div>
     );

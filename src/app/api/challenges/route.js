@@ -1,12 +1,16 @@
 import prisma from "@/utils/db";
-import {NextResponse} from "next/server";
+import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        const challenges = await prisma.challenge.findMany();
-        return NextResponse.json({data: challenges}, { status: 200 });
+        const challenges = await prisma.challenge.findMany({
+            orderBy: {
+                end_date: "asc",
+            },
+        });
+        return NextResponse.json({ data: challenges }, { status: 200 });
     } catch (error) {
-        return NextResponse.json({error}, { status: 500 });
+        return NextResponse.json({ error }, { status: 500 });
     }
 }
 
@@ -23,9 +27,9 @@ export async function POST(req) {
             },
         });
 
-        return NextResponse.json({data: challenge}, { status: 201 });
+        return NextResponse.json({ data: challenge }, { status: 201 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({error}, { status: 500 });
+        return NextResponse.json({ error }, { status: 500 });
     }
 }

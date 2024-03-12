@@ -21,7 +21,7 @@ import { useState } from "react";
 
 const UserTable = ({ users }) => {
     const [page, setPage] = React.useState(1);
-    const rowsPerPage = 5;
+    const rowsPerPage = 10;
     const [search, setSearch] = useState("");
 
     const pages = Math.ceil(users.length / rowsPerPage);
