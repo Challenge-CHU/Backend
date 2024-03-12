@@ -5,4 +5,4 @@
 
 */
 -- AlterTable
-ALTER TABLE "Challenge" ADD COLUMN     "password" TEXT NOT NULL DEFAULT '';
+ALTER TABLE "Challenge" ADD COLUMN     "password" TEXT NOT NULL;
