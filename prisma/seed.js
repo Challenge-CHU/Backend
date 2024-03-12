@@ -2,6 +2,9 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 async function main() {
+    await prisma.badge.deleteMany();
+    await prisma.badgeCategory.deleteMany();
+    
     const badgeCategoryBronze = await prisma.badgeCategory.create({
         data: {
             name: "Bronze",
@@ -34,7 +37,7 @@ async function main() {
 
     const badge100K = await prisma.badge.create({
         data: {
-            name: "Badge 100K 🏅",
+            name: "Badge 100K",
             description: `Bravo ! Vous avez franchi la barre des 100 000 pas ! Continuez sur votre lancée et défiez-vous chaque jour pour atteindre de nouveaux sommets.
             Félicitations ! Vous avez parcouru un demi-million de pas. Votre persévérance et votre engagement envers votre santé sont remarquables. Continuez à marcher avec détermination !`,
             image: "/badges/100K.png",
@@ -48,7 +51,7 @@ async function main() {
 
     const badge250K = await prisma.badge.create({
         data: {
-            name: "Badge 250K 🏅",
+            name: "Badge 250K",
             description: `Vous êtes sur la bonne voie ! Avec 250 000 pas à votre actif, vous montrez une détermination impressionnante. Continuez à avancer vers vos objectifs de santé et de bien-être !`,
             image: "/badges/250K.png",
             BadgeCategory: {
@@ -61,7 +64,7 @@ async function main() {
 
     const badge500K = await prisma.badge.create({
         data: {
-            name: "Badge 500K 🏅",
+            name: "Badge 500K",
             description: `Bravo ! Vous avez franchi la barre des 100 000 pas ! Continuez sur votre lancée et défiez-vous chaque jour pour atteindre de nouveaux sommets.
             Félicitations ! Vous avez parcouru un demi-million de pas. Votre persévérance et votre engagement envers votre santé sont remarquables. Continuez à marcher avec détermination !`,
             image: "/badges/500K.png",
@@ -75,7 +78,7 @@ async function main() {
 
     const badge2M = await prisma.badge.create({
         data: {
-            name: "Badge 2M 🏅",
+            name: "Badge 2M",
             description: `Incroyable ! Vous avez atteint la marque impressionnante de 2 millions de pas ! Votre dévouement envers une vie active et saine est inspirant pour nous tous. Continuez à avancer et à repousser vos limites !`,
             image: "/badges/2M.png",
             BadgeCategory: {
