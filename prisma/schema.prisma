@@ -1,11 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
 
@@ -15,32 +9,32 @@ datasource db {
 }
 
 model User {
-  id                    String  @id @default(uuid())
-  identifier            String  @unique
-  pseudo                String  @unique
+  id                    String              @id @default(uuid())
+  identifier            String              @unique
+  pseudo                String              @unique
   firebase_device_token String?
   avatar_id             String?
   Steps                 Step[]
   UserBadge             UserBadge[]
-  Friends               UserFriend[] @relation(name: "UserFriendUser")
-  FriendOf              UserFriend[] @relation(name: "UserFriendFriend")
-  FriendRequests        UserFriendRequest[] @relation(name: "UserFriendRequestUser")
-  RequestOf             UserFriendRequest[] @relation(name: "UserFriendRequestFriend")
+  FriendOf              UserFriend[]        @relation("UserFriendFriend")
+  Friends               UserFriend[]        @relation("UserFriendUser")
+  RequestOf             UserFriendRequest[] @relation("UserFriendRequestFriend")
+  FriendRequests        UserFriendRequest[] @relation("UserFriendRequestUser")
 }
 
 model Step {
-  id      String   @id @default(uuid())
-  user_id String
-  date    DateTime
+  id           String    @id @default(uuid())
+  user_id      String
+  date         DateTime
   step_count   Int
   challenge_id String
-  User    User     @relation(fields: [user_id], references: [id])
-  Challenge Challenge @relation(fields: [challenge_id], references: [id])
+  Challenge    Challenge @relation(fields: [challenge_id], references: [id])
+  User         User      @relation(fields: [user_id], references: [id])
 }
 
 model Challenge {
-  id          String   @id @default(uuid())
-  name        String @db.VarChar(50)
+  id          String      @id @default(uuid())
+  name        String      @db.VarChar(50)
   description String
   start_date  DateTime
   end_date    DateTime
@@ -49,27 +43,27 @@ model Challenge {
 }
 
 model UserBadge {
-  id      String @id @default(uuid())
-  user_id String
-  badge_id String
+  id           String    @id @default(uuid())
+  user_id      String
+  badge_id     String
   challenge_id String
-  User    User   @relation(fields: [user_id], references: [id])
-  Badge   Badge  @relation(fields: [badge_id], references: [id])
-  Challenge Challenge @relation(fields: [challenge_id], references: [id])
+  Badge        Badge     @relation(fields: [badge_id], references: [id])
+  Challenge    Challenge @relation(fields: [challenge_id], references: [id])
+  User         User      @relation(fields: [user_id], references: [id])
 }
 
 model Badge {
-  id          String @id @default(uuid())
-  name        String
-  description String
-  image       String
+  id                String        @id @default(uuid())
+  name              String
+  description       String
+  image             String
   badge_category_id String
-  UserBadge   UserBadge[]
-  BadgeCategory BadgeCategory @relation(fields: [badge_category_id], references: [id])
+  BadgeCategory     BadgeCategory @relation(fields: [badge_category_id], references: [id])
+  UserBadge         UserBadge[]
 }
 
 model BadgeCategory {
-  id     String @id @default(uuid())
+  id     String  @id @default(uuid())
   name   String
   Badges Badge[]
 }
@@ -78,14 +72,14 @@ model UserFriend {
   id        String @id @default(uuid())
   user_id   String
   friend_id String
-  User      User   @relation(name: "UserFriendUser", fields: [user_id], references: [id])
-  Friend    User   @relation(name: "UserFriendFriend", fields: [friend_id], references: [id])
+  Friend    User   @relation("UserFriendFriend", fields: [friend_id], references: [id])
+  User      User   @relation("UserFriendUser", fields: [user_id], references: [id])
 }
 
 model UserFriendRequest {
   id        String @id @default(uuid())
   user_id   String
   friend_id String
-  User      User   @relation(name: "UserFriendRequestUser", fields: [user_id], references: [id])
-  Friend    User   @relation(name: "UserFriendRequestFriend", fields: [friend_id], references: [id])
+  Friend    User   @relation("UserFriendRequestFriend", fields: [friend_id], references: [id])
+  User      User   @relation("UserFriendRequestUser", fields: [user_id], references: [id])
 }
