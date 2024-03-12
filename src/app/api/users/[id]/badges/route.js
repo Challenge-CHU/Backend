@@ -9,12 +9,17 @@ export async function GET(req, { params }) {
 	}
 
 	try {
-		const badges = await prisma.badge.findMany({
+		const badges = await prisma.UserBadge.findMany({
 			where: { user_id: userId },
+			include: {
+				Badge: true
+			}
 		});
 		return NextResponse.json({ data: badges }, { status: 200 });
 	} catch (error) {
+		console.error(error)
 		return NextResponse.json({ error }, { status: 500 });
 	}
 	//get all badges from a user
 }
+
