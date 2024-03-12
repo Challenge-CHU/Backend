@@ -1,4 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import * as jose from 'jose';
 
 const AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
@@ -23,7 +24,7 @@ const AuthOptions = {
                 const user = {
                     id: 1,
                     name: process.env.ADMIN_USERNAME,
-                    email : ""
+                    email: ""
                 }
                 console.log('user defini ====>', user);
 
@@ -31,6 +32,14 @@ const AuthOptions = {
             }
         })
     ],
+    callbacks: {
+        async session({ session, token, user }) {
+            session.user.jwt = await new jose.SignJWT(
+                { id: token.id, name: token.name },
+            ).setIssuedAt().setProtectedHeader({ alg: 'HS256' }).sign(new TextEncoder().encode(process.env.JWT_SECRET))
+            return session
+        },
+    },
     pages: {
         signIn: "/connexion",
     },
