@@ -9,7 +9,7 @@ export async function GET(req, { params }) {
 	}
 
 	try {
-		const badges = await prisma.UserBadge.findMany({
+		const badges = await prisma.userBadge.findMany({
 			where: { user_id: userId },
 			include: {
 				Badge: true
