@@ -10,7 +10,7 @@ const NavMobile = ({ showMenuMobile, setShowMenuMobile }) => {
     return (
         <>
             {showMenuMobile && (
-                <div className="block lg:hidden absolute top-0 right-0 z-10 bg-neutral h-screen w-[250px] shadow-custom px-4">
+                <div className="flex flex-col lg:hidden fixed top-0 right-0 z-10 bg-neutral h-screen w-[250px] shadow-custom px-4">
                     <div className="flex justify-between items-center pt-4 ps-4">
                         <h3 className="font-bold text-xl">Menu</h3>
                         <Button
@@ -21,7 +21,7 @@ const NavMobile = ({ showMenuMobile, setShowMenuMobile }) => {
                             <FaXmark className="text-secondary" size={36} />
                         </Button>
                     </div>
-                    <ul className="menu px-0">
+                    <ul className="menu px-0 flex-1">
                         <li className="">
                             <Link href="/challenges">
                                 <FaTrophy />
@@ -41,6 +41,13 @@ const NavMobile = ({ showMenuMobile, setShowMenuMobile }) => {
                             </Link>
                         </li>
                     </ul>
+
+                    <button
+                        className=" link link-error mb-4"
+                        onClick={() => signOut()}
+                    >
+                        Déconnexion
+                    </button>
                 </div>
             )}
         </>
