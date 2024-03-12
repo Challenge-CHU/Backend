@@ -7,7 +7,7 @@ const secret = new TextEncoder().encode(
 )
 
 export async function middleware(req, res) {
-    if (req.nextUrl.pathname.startsWith('/api/auth/login') ||req.nextUrl.pathname.startsWith('/api/challenges/acutal')) {
+    if (req.nextUrl.pathname.startsWith('/api/auth/login') ||req.nextUrl.pathname.startsWith('/api/challenges/actual')) {
         return NextResponse.next();
     } else if (req.nextUrl.pathname.startsWith('/api')) {
         let token = req.headers.get('authorization');
