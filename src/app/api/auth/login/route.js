@@ -52,7 +52,7 @@ export async function POST(req, res) {
 			return NextResponse.json({ error: "User not found" }, { status: 404 });
 		}
 
-		const token = jose.SignJWT(
+		const token = await new jose.SignJWT(
 			{ id: user.id, identifier: user.identifier },
 		).setIssuedAt().setProtectedHeader({ alg: 'HS256' }).sign(secret);
 
