@@ -59,9 +59,7 @@ export async function GET(req, { params }) {
                 0
             );
 
-            let averageSteps = Math.floor(
-                totalSteps / (Difference_In_Days + 1)
-            );
+            let averageSteps = Math.floor(totalSteps / Difference_In_Days);
 
             let challengeStats = {
                 userId: user.id,
