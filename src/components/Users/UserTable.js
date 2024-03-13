@@ -86,12 +86,9 @@ const UserTable = ({ users }) => {
                     </Link>
                 );
             case "avatar_id":
-                console.log("cellValue", cellValue);
-
                 const profilIcon = profilIcons.find(
                     (icon) => icon.id == cellValue
                 );
-                console.log("profilIcon", profilIcon);
                 return profilIcon ? (
                     <div className="flex items-center gap-2">
                         <Image

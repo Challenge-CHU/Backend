@@ -25,6 +25,7 @@ const Utilisateur = ({ user }) => {
                 const endDate = new Date(c.end_date);
                 return today >= startDate && today <= endDate;
             });
+
             if (!runningChallenge) {
                 let lastRunningChallenge = null;
                 challenges.forEach((c) => {
@@ -39,7 +40,7 @@ const Utilisateur = ({ user }) => {
                 });
                 setChallenge(lastRunningChallenge);
             } else {
-                setChallenge(challenges[0]);
+                setChallenge(runningChallenge);
             }
         }
     }, [challenges]);
@@ -95,8 +96,6 @@ const Utilisateur = ({ user }) => {
                     challenge,
                     user
                 );
-                console.log("challengeStatsDatas");
-                console.log(challengeStatsDatas.data);
                 setChallengeStats(challengeStatsDatas.data);
                 setGraphWeeks(
                     challengeStatsDatas.data.challengesWeeks.map((week) => {
@@ -114,11 +113,9 @@ const Utilisateur = ({ user }) => {
                     )
                 );
                 if (max > 10000 && max < 1000000) {
-                    console.log("max");
                     max = max / 10000;
                     max = Math.round(max * 1.4) * 10000;
                 } else if (max >= 1000000) {
-                    console.log("max2");
                     max = max / 100000;
                     max = Math.round(max * 1.4) * 100000;
                 } else {

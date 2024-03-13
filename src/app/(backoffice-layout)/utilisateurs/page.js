@@ -5,8 +5,8 @@ import prisma from "@/utils/db";
 import ModalImportUser from "@/components/Users/ModalImportUser";
 
 export const metadata = {
-    title: "Challenges",
-    description: "Liste et gestion des challenges",
+    title: "Utilisateurs",
+    description: "Liste et gestion des utilisateurs",
 };
 
 async function getUsers() {

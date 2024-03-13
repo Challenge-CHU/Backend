@@ -18,7 +18,7 @@ const Sidebar = () => {
                 <div className=" flex flex-col lg:items-center justify-center gap-1 lg:gap-4">
                     <Image
                         className="logo-sidebar"
-                        src="/logo-chu.png"
+                        src="/assets/logo-chu.svg"
                         width={149}
                         height={72}
                         alt="Logo CHU Rouen"

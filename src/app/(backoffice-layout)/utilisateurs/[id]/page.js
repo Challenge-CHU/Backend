@@ -1,10 +1,7 @@
 import prisma from "@/utils/db";
 import Utilisateur from "@/components/Users/Utilisateur";
 
-export const metadata = {
-    title: "Challenges",
-    description: "Liste et gestion des challenges",
-};
+export const metadata = {};
 
 async function getChallengesDatas(userId) {
     const challenges = await prisma.challenge.findMany();
@@ -37,10 +34,9 @@ export default async function UtilisateurPage({ params }) {
     const user = await getUser(params.id);
     const challenges = await getChallengesDatas(params.id);
 
+    metadata.title = `${user.identifier} - ${user.pseudo}`;
+    metadata.description = `Page de l'utilisateur ${user.identifier} - ${user.pseudo}`;
     user.challenges = challenges;
-
-    console.log("USER");
-    console.log(user);
 
     return (
         <>
