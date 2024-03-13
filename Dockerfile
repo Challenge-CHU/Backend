@@ -23,6 +23,7 @@ FROM node:20.11-alpine3.18 AS next
 WORKDIR /app
 COPY --from=build /app/package.json /app/
 COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/public /app/public
 COPY --from=build /app/.next /app/.next
 
 EXPOSE 3000
