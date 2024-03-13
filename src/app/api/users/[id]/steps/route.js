@@ -69,7 +69,7 @@ export async function PUT(req, { params }) {
             },
         });
 
-        if(existingStep && steps > existingStep.step_count) {
+        if(existingStep && steps >= existingStep.step_count) {
             try {
                 const step = await prisma.step.update({
                     where: { id: existingStep.id },
