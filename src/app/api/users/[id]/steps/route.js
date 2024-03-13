@@ -82,6 +82,8 @@ export async function PUT(req, { params }) {
             } catch (error) {
                 return NextResponse.json({ error }, { status: 500 });
             }
+        } else if (existingStep && steps < existingStep.step_count) {
+            return NextResponse.json({ error: "Step count is less than existing step count" }, { status: 400 });
         } else {
             try {
                 const step = await prisma.step.create({
