@@ -1,6 +1,5 @@
 import prisma from "@/utils/db";
 import { NextResponse } from "next/server";
-import dayjs from "dayjs";
 
 export async function GET() {
     try {
@@ -13,7 +12,7 @@ export async function GET() {
 
 export async function POST(req) {
     const { user_id, step_count, challenge_id } = await req.json();
-    const date = dayjs().toISOString();
+    const date = new Date().toISOString();
 
     try {
         const step = await prisma.step.create({

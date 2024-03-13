@@ -1,5 +1,4 @@
 import prisma from "@/utils/db";
-import dayjs from "dayjs";
 import * as jose from 'jose';
 import { NextResponse } from "next/server";
 
