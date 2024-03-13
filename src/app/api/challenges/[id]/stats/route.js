@@ -182,6 +182,35 @@ export async function GET(req, { params }) {
             });
             challengeStats.challengesWeeks = challengesWeeks;
 
+            const averageStepLengthInMeters = 0.60; // in meters
+
+            function convertStepsToEarthCircumnavigations(steps) {
+                const earthCircumferenceInMeters = 40075000; // in meters
+
+                const totalDistanceInMeters = steps * averageStepLengthInMeters;
+                return (totalDistanceInMeters / earthCircumferenceInMeters).toFixed(3);
+            }
+
+            challengeStats.totalDistanceInEarthCircumnavigations = convertStepsToEarthCircumnavigations(
+                totalSteps
+            );
+
+            function convertStepsToCO2Saved(steps) {
+                const co2SavedPerMeter = 0.00027; // in kg
+
+                const totalDistanceInMeters = steps * averageStepLengthInMeters;
+                return (totalDistanceInMeters * co2SavedPerMeter).toFixed(1);
+            }
+
+            challengeStats.totalCO2SavedInKg = convertStepsToCO2Saved(totalSteps);
+
+            function convertStepsToKilometers(steps) {
+                const totalDistanceInMeters = steps * averageStepLengthInMeters;
+                return (totalDistanceInMeters / 1000).toFixed(0);
+            }
+
+            challengeStats.totalDistanceInKilometers = convertStepsToKilometers(totalSteps);
+
             return NextResponse.json({ data: challengeStats }, { status: 200 });
         } catch (error) {
             console.log(error);
