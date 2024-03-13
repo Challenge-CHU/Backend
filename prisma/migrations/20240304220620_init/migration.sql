@@ -1,4 +1,6 @@
 -- CreateTable
+SET TIME ZONE 'Europe/Paris';
+
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "identifier" TEXT NOT NULL,
