@@ -1,6 +1,12 @@
 import prisma from "@/utils/db";
 import { NextResponse } from "next/server";
 
+function removeSpacesAndAccent(str) {
+	const strNoAccents = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+	const strCapitalized = strNoAccents.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+	return strCapitalized.replace(/\s+/g, '');
+}
+
 export async function GET(req, { params }) {
 	const userId = params.id;
 
@@ -26,11 +32,14 @@ export async function GET(req, { params }) {
 			const userBadge = userBadges.find(userBadge => userBadge.badge_id === badge.id);
 			return {
 				...badge,
+				labelImage: removeSpacesAndAccent(badge.name),
 				earned: !!userBadge
 			}
 		});
 
 
+
+		console.log(allBadges)
 		return NextResponse.json({ data: allBadges }, { status: 200 });
 	} catch (error) {
 		console.error(error)
