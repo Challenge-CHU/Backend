@@ -14,7 +14,7 @@ COPY tailwind.config.js tailwind.config.js
 COPY public public/
 
 RUN npx prisma generate
-RUN npx prisma migrate deploy
+# RUN npx prisma migrate deploy
 
 RUN npm run build
 
