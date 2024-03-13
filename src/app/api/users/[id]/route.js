@@ -29,32 +29,22 @@ export async function PUT(req, { params }) {
         return NextResponse.json({ error: "Missing user ID" }, { status: 400 });
     }
 
-    const { pseudo, avatar_id = null, firebase_device_token = null } = await req.json();
+    const { pseudo, avatar_id, firebase_device_token } = await req.json();
 
     try {
-        let user = null;
-        if(avatar_id === null && firebase_device_token === null) {
-            user = await prisma.user.update({
-                where: { id: userId },
-                data: {
-                    pseudo
-                },
-            });
+        const data = {
+            pseudo,
+            avatar_id,
+            firebase_device_token,
+        };
 
-        } else {
-            user = await prisma.user.update({
-                where: { id: userId },
-                data: {
-                    pseudo,
-                    avatar_id,
-                    firebase_device_token
-                },
-            });
-        }
+        const user = await prisma.user.update({
+            where: { id: userId },
+            data: data,
+        });
 
         return NextResponse.json({ data: user }, { status: 200 });
     } catch (error) {
-        console.error(error);
         return NextResponse.json({ error }, { status: 404 });
     }
 }
