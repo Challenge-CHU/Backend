@@ -9,7 +9,8 @@ export async function middleware(req, res) {
         req.nextUrl.pathname.startsWith("/api/auth") ||
         req.nextUrl.pathname.startsWith("/api/challenges/actual") ||
         req.nextUrl.pathname.startsWith("/avatars") ||
-        req.nextUrl.pathname.startsWith("/assets")
+        req.nextUrl.pathname.startsWith("/assets") ||
+        req.nextUrl.pathname.startsWith("/badges")
     ) {
         return NextResponse.next();
     } else if (req.nextUrl.pathname.startsWith("/api")) {
