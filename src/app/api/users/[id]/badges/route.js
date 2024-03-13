@@ -9,17 +9,29 @@ export async function GET(req, { params }) {
 	}
 
 	try {
-		const badges = await prisma.userBadge.findMany({
-			where: { user_id: userId },
+		const badges = await prisma.badge.findMany({
 			include: {
-				Badge: {
-					include: {
-						BadgeFamily: true
-					}
-				}
+				BadgeCategory: true,
+				BadgeFamily: true
 			}
 		});
-		return NextResponse.json({ data: badges }, { status: 200 });
+
+		const userBadges = await prisma.userBadge.findMany({
+			where: {
+				user_id: userId
+			}
+		});
+
+		const allBadges = badges.map(badge => {
+			const userBadge = userBadges.find(userBadge => userBadge.badge_id === badge.id);
+			return {
+				...badge,
+				earned: !!userBadge
+			}
+		});
+
+
+		return NextResponse.json({ data: allBadges }, { status: 200 });
 	} catch (error) {
 		console.error(error)
 		return NextResponse.json({ error }, { status: 500 });
