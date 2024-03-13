@@ -7,6 +7,7 @@ import { FaBars } from "react-icons/fa6";
 import { Button } from "react-daisyui";
 import { useState } from "react";
 import NavMobile from "./NavMobile";
+import { signOut } from "next-auth/react";
 
 const Sidebar = () => {
     const [showMenuMobile, setShowMenuMobile] = useState(false);
@@ -43,6 +44,13 @@ const Sidebar = () => {
                 showMenuMobile={showMenuMobile}
                 setShowMenuMobile={setShowMenuMobile}
             />
+
+            <button
+                className="hidden lg:block link link-error mb-4"
+                onClick={() => signOut()}
+            >
+                Déconnexion
+            </button>
         </nav>
     );
 };

@@ -17,7 +17,7 @@ const NavSidebar = () => {
     }, [pathname]);
 
     return (
-        <ul className="menu px-0 hidden lg:block w-full">
+        <ul className="menu px-0 hidden lg:block w-full flex-1">
             <li>
                 <Link
                     className={activeLink === "/challenges" ? "active" : ""}

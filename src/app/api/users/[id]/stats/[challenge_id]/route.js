@@ -1,4 +1,5 @@
 import prisma from "@/utils/db";
+import { errorToJSON } from "next/dist/server/render";
 import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {
@@ -43,7 +44,12 @@ export async function GET(req, { params }) {
 
         try {
             const date1 = new Date(challenge.start_date);
-            const date2 = new Date(challenge.end_date);
+            let date2 = new Date(challenge.end_date);
+
+            if (date2 > new Date()) {
+                date2 = new Date();
+                date2.setHours(23, 59, 59);
+            }
             let Difference_In_Time = date2.getTime() - date1.getTime();
             let Difference_In_Days = Math.round(
                 Difference_In_Time / (1000 * 3600 * 24)
