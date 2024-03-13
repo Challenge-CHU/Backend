@@ -3,8 +3,6 @@ import Image from "next/image";
 import { Button, Input, Alert } from "react-daisyui";
 import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export default function SignIn() {
     const [username, setUsername] = useState("");
@@ -60,14 +58,14 @@ export default function SignIn() {
         <main className="lg:min-w-[600px] w-full md:w-auto bg-white py-8 md:py-16 px-4 md:px-24 flex flex-col gap-3 items-center rounded-lg">
             <div className="flex justify-around gap-2 md:gap-10 items-center">
                 <Image
-                    src="/logo-chu.png"
+                    src="/assets/logo-chu.svg"
                     width={80}
                     height={80}
                     alt="Logo CHU Rouen"
                     className="md:w-[150px]"
                 />
                 <Image
-                    src="/logo-cesi.png"
+                    src="/assets/logo-cesi.svg"
                     width={80}
                     height={80}
                     alt="Logo CESI"

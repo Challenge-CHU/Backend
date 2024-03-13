@@ -74,8 +74,6 @@ const ModalDownloadUserChallengeDatas = ({ challenge, user }) => {
             endDate
         );
 
-        console.log(completeDatas);
-
         const datesArray = getDatesArray(startDate, endDate);
         let lines = [];
         let userData = completeDatas.data;

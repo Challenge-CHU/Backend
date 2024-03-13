@@ -23,7 +23,6 @@ const ModalEditUser = ({ user }) => {
         const data = {
             pseudo,
         };
-        console.log(data);
         ref.current?.close();
 
         try {
@@ -36,7 +35,6 @@ const ModalEditUser = ({ user }) => {
             );
 
             const responseData = await response.json();
-            console.log(responseData);
             // Handle success
             toast.success("Utilisateur modifié avec succès !");
             ref.current?.close();

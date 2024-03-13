@@ -22,9 +22,8 @@ const ModalDelete = ({ id }) => {
             const response = await deleteFetch("/api/users/" + id, token);
 
             const responseData = await response.json();
-            console.log(responseData);
             // Handle success
-            toast.success("Utilisateur suprrimé avec succès !");
+            toast.success("Utilisateur supprimé avec succès !");
             ref.current?.close();
             router.push("/utilisateurs");
         } catch (error) {

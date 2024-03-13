@@ -61,7 +61,6 @@ const ModalChallenge = ({ challenge }) => {
             const session = await getSession();
             const token = session ? session.user.jwt : null;
             if (challenge) {
-                console.log("PUT");
                 response = await putFetch(
                     "/api/challenges/" + challenge.id,
                     data,

@@ -14,8 +14,8 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
     const session = await getServerSession(authOptions);
-    console.log("SESSION CONNECTEE");
-    console.log(session);
+    // console.log("SESSION CONNECTEE");
+    // console.log(session);
     return (
         <html lang="en" data-theme="mytheme">
             <meta
