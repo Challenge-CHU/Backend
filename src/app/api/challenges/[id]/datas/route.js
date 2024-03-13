@@ -82,7 +82,7 @@ export async function GET(req, { params }) {
                     }
                 });
                 challengeData.average = Math.floor(
-                    challengeData.total / (Difference_In_Days + 1)
+                    challengeData.total / Difference_In_Days
                 );
 
                 return challengeData;

@@ -62,7 +62,7 @@ export async function GET(req, { params }) {
                     0
                 );
                 challengeData.average = Math.floor(
-                    challengeData.total / (Difference_In_Days + 1)
+                    challengeData.total / Difference_In_Days
                 );
 
                 return challengeData;
@@ -82,7 +82,7 @@ export async function GET(req, { params }) {
 
             let averageStepsPerUser = Math.floor(totalSteps / numberOfUsers);
             let averageStepsPerDayAndPerUser = Math.floor(
-                averageStepsPerUser / (Difference_In_Days + 1)
+                averageStepsPerUser / Difference_In_Days
             );
 
             let challengeStats = {

@@ -90,7 +90,7 @@ export async function GET(req, { params }) {
             0
         );
         challengeData.average = Math.floor(
-            challengeData.total / (Difference_In_Days + 1)
+            challengeData.total / Difference_In_Days
         );
 
         return NextResponse.json({ data: challengeData }, { status: 200 });

@@ -56,6 +56,16 @@ const UserTable = ({ users }) => {
     const renderCell = React.useCallback((user, columnKey) => {
         const cellValue = user[columnKey];
 
+        const profilIcons = [
+            { id: 1, url: "cheval", name: "cheval" },
+            { id: 2, url: "crocodile", name: "crocodile" },
+            { id: 3, url: "elan", name: "elan" },
+            { id: 4, url: "koala", name: "koala" },
+            { id: 5, url: "lapin", name: "lapin" },
+            { id: 6, url: "lion", name: "lion" },
+            { id: 7, url: "pinguin", name: "pinguin" },
+            { id: 8, url: "tigre", name: "tigre" },
+        ];
         switch (columnKey) {
             case "identifier":
                 return (
@@ -76,14 +86,22 @@ const UserTable = ({ users }) => {
                     </Link>
                 );
             case "avatar_id":
-                return (
+                console.log("cellValue", cellValue);
+
+                const profilIcon = profilIcons.find(
+                    (icon) => icon.id == cellValue
+                );
+                console.log("profilIcon", profilIcon);
+                return profilIcon ? (
                     <div className="flex items-center gap-2">
                         <Image
-                            src={"./avatars/" + cellValue + ".png"}
-                            alt="avatar"
+                            src={"/avatars/" + profilIcon.url + ".svg"}
+                            alt={"Avatar " + profilIcon.name}
                             className="w-8 h-8 rounded-full"
                         />
                     </div>
+                ) : (
+                    "-"
                 );
             case "actions":
                 return (
