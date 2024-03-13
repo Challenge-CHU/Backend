@@ -14,6 +14,8 @@ COPY tailwind.config.js tailwind.config.js
 COPY public public/
 
 RUN npx prisma generate
+RUN npx prisma migrate deploy
+
 RUN npm run build
 
 FROM node:20.11-alpine3.18 AS next
