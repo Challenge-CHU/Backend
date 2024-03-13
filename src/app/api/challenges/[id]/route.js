@@ -45,7 +45,7 @@ export async function PUT(req, { params }) {
 
         return NextResponse.json({ data: challenge }, { status: 200 });
     } catch (error) {
-        return NextResponse.json({ error }, { status: 404 });
+        return NextResponse.json({ error }, { status: 500 });
     }
 }
 
