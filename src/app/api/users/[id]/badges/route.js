@@ -12,7 +12,11 @@ export async function GET(req, { params }) {
 		const badges = await prisma.userBadge.findMany({
 			where: { user_id: userId },
 			include: {
-				Badge: true
+				Badge: {
+					include: {
+						BadgeFamily: true
+					}
+				}
 			}
 		});
 		return NextResponse.json({ data: badges }, { status: 200 });
