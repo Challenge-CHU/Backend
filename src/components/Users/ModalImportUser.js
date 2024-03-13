@@ -5,13 +5,14 @@ import toast from "react-hot-toast";
 import { FaPlus } from "react-icons/fa6";
 import { useState } from "react";
 import Papa from "papaparse";
+import { postFetch } from "@/utils/fetch";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const ModalImportUser = () => {
     const ref = useRef(null);
     const [csvFile, setCsvFile] = useState(null);
-    const [parsedData, setParsedData] = useState([]);
-    const [tableRows, setTableRows] = useState([]);
-    const [values, setValues] = useState([]);
+    const router = useRouter();
 
     const handleShow = useCallback(() => {
         ref.current?.showModal();
@@ -19,24 +20,33 @@ const ModalImportUser = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         ref.current?.close();
-        Papa.parse(csvFile, {
-            header: true,
-            skipEmptyLines: true,
-            complete: function (results) {
-                const rowsArray = [];
-                const valuesArray = [];
-                results.data.map((d) => {
-                    rowsArray.push(Object.keys(d));
-                    valuesArray.push(Object.values(d));
+
+        let tableRows = [];
+        let values = [];
+
+        const parseFile = (csvFile) => {
+            return new Promise((resolve) => {
+                Papa.parse(csvFile, {
+                    header: true,
+                    skipEmptyLines: true,
+                    complete: function (results) {
+                        const rowsArray = [];
+                        const valuesArray = [];
+                        results.data.map((d) => {
+                            rowsArray.push(Object.keys(d));
+                            valuesArray.push(Object.values(d));
+                        });
+
+                        tableRows = rowsArray[0];
+                        values = valuesArray;
+                        resolve(results.data);
+                    },
                 });
-                setParsedData(results.data);
-                setTableRows(rowsArray[0]);
-                setValues(valuesArray);
-            },
-        });
-        const users = JSON.stringify(values.flat());
+            });
+        };
+        let parsedData = await parseFile(csvFile);
+        const users = values.flat();
 
         if (tableRows.length !== 1 || tableRows[0] !== "identifiant") {
             toast.error(
@@ -46,10 +56,14 @@ const ModalImportUser = () => {
         }
 
         try {
-            const response = await fetch("/api/users/multiple", {
-                method: "POST",
-                body: users,
-            });
+            const session = await getSession();
+            const token = session ? session.user.jwt : null;
+            const response = await postFetch(
+                "/api/users/multiple",
+                users,
+                token
+            );
+
             const responseData = await response.json();
 
             let numberOfUsers = users.length;
@@ -71,8 +85,8 @@ const ModalImportUser = () => {
                 toast.success("Utilisateurs ajoutés avec succès !");
             }
             ref.current?.close();
+            router.push("/utilisateurs");
         } catch (error) {
-            console.error(error);
             // Handle error
             toast.error(
                 "Une erreur s'est produite lors de l'ajout des utilisateurs."
