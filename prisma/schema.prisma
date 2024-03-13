@@ -59,13 +59,22 @@ model Badge {
   name              String
   description       String
   image             String
+  rank              Int
   badge_category_id String
+  badge_family_id   String
   BadgeCategory     BadgeCategory @relation(fields: [badge_category_id], references: [id])
   UserBadge         UserBadge[]
+  BadgeFamily       BadgeFamily  @relation(fields: [badge_family_id], references: [id])
 }
 
 model BadgeCategory {
   id     String  @id @default(uuid())
+  name   String
+  Badges Badge[]
+}
+
+model BadgeFamily {
+  id     String @id @default(uuid())
   name   String
   Badges Badge[]
 }
