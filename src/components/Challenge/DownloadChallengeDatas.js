@@ -98,9 +98,16 @@ const ModalDownloadChallengeDatas = ({ challenge }) => {
             startDateRef.current.value = new Date(challenge.start_date)
                 .toISOString()
                 .split("T")[0];
-            endDateRef.current.value = new Date(challenge.end_date)
-                .toISOString()
-                .split("T")[0];
+
+            if (new Date(challenge.end_date) > new Date()) {
+                let newDate = new Date();
+                newDate.setHours(23, 59, 59);
+                endDateRef.current.value = newDate.toISOString().split("T")[0];
+            } else {
+                endDateRef.current.value = new Date(challenge.end_date)
+                    .toISOString()
+                    .split("T")[0];
+            }
         }
     }, [challenge]);
 
