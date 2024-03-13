@@ -1,5 +1,4 @@
 import prisma from "@/utils/db";
-import { errorToJSON } from "next/dist/server/render";
 import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {

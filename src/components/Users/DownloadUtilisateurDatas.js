@@ -5,6 +5,8 @@ import { getDatesArray } from "@/utils/date";
 import { toast } from "react-hot-toast";
 import { Modal, Button } from "react-daisyui";
 import { useRef, useCallback, useEffect } from "react";
+import { getSession } from "next-auth/react";
+import { getFetch } from "@/utils/fetch";
 
 const convertJSONtoCSV = (json) => {
     const separator = ";";
@@ -23,11 +25,9 @@ const convertJSONtoCSV = (json) => {
 
 const getUserChallengeDatas = async (challenge, user, startDate, endDate) => {
     try {
-        console.log("DATES");
-        console.log(startDate);
-        console.log(endDate);
-
-        const response = await fetch(
+        const session = await getSession();
+        const token = session ? session.user.jwt : null;
+        const response = await getFetch(
             "/api/users/" +
                 user.id +
                 "/datas/" +
@@ -35,7 +35,8 @@ const getUserChallengeDatas = async (challenge, user, startDate, endDate) => {
                 "?start_date=" +
                 startDate +
                 "&end_date=" +
-                endDate
+                endDate,
+            token
         );
         if (!response.ok) {
             throw new Error("Failed to fetch challenge data");
@@ -80,9 +81,9 @@ const ModalDownloadUserChallengeDatas = ({ challenge, user }) => {
         let userData = completeDatas.data;
 
         let line = [];
-        line.userIdentifier = userData.userIdentifier;
-        line.total = userData.total;
-        line.average = userData.average;
+        line.Identifiant = userData.userIdentifier;
+        line.Total = userData.total;
+        line.Moyenne = userData.average;
         datesArray.forEach((date) => {
             const step = userData[date] ? userData[date] : 0;
             line[date] = step;

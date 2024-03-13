@@ -3,10 +3,14 @@ import { Modal, Button } from "react-daisyui";
 import { useRef, useCallback } from "react";
 import toast from "react-hot-toast";
 import { FaPlus } from "react-icons/fa6";
+import { postFetch } from "@/utils/fetch";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const ModalNewUser = () => {
     const ref = useRef(null);
     const identifierRef = useRef(null);
+    const router = useRouter();
 
     const handleShow = useCallback(() => {
         ref.current?.showModal();
@@ -16,27 +20,43 @@ const ModalNewUser = () => {
         e.preventDefault();
         const identifiers = identifierRef.current.value
             .split(",")
-            .map((identifier) => identifier.trim());
+            .map((identifier) => identifier.trim())
+            .filter((identifier) => identifier !== "");
 
-        const data = {
-            identifiers,
-        };
-        console.log(data);
+        const data = identifiers;
         ref.current?.close();
 
         try {
-            const response = await fetch("/api/users", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
+            const session = await getSession();
+            const token = session ? session.user.jwt : null;
+            const response = await postFetch(
+                "/api/users/multiple",
+                data,
+                token
+            );
+
             const responseData = await response.json();
-            console.log(responseData);
-            // Handle success
-            toast.success("Utilisateurs ajoutés avec succès !");
+
+            let numberOfUsers = data.length;
+            if (responseData.data.count === 0) {
+                toast.error(
+                    "Aucun utilisateur n'a été ajouté car ils existent déjà."
+                );
+                return;
+            } else if (numberOfUsers !== responseData.data.count) {
+                toast.success(
+                    numberOfUsers -
+                        responseData.data.count +
+                        " sur " +
+                        numberOfUsers +
+                        " utilisateurs existent déjà. Les autres ont été ajoutés avec succès !"
+                );
+                return;
+            } else {
+                toast.success("Utilisateurs ajoutés avec succès !");
+            }
             ref.current?.close();
+            router.push("/utilisateurs");
         } catch (error) {
             console.error(error);
             // Handle error

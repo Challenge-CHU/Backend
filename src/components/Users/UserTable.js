@@ -116,6 +116,7 @@ const UserTable = ({ users }) => {
                 />
             </div>
             <Table
+                aria-label="Liste des utilisateurs"
                 isStriped
                 bottomContent={
                     <div className="flex w-full justify-center">

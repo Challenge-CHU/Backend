@@ -3,9 +3,13 @@ import { Modal, Button } from "react-daisyui";
 import { useRef, useCallback } from "react";
 import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa6";
+import { deleteFetch } from "@/utils/fetch";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const ModalDelete = ({ id }) => {
     const ref = useRef(null);
+    const router = useRouter();
 
     const handleShow = useCallback(() => {
         ref.current?.showModal();
@@ -13,17 +17,16 @@ const ModalDelete = ({ id }) => {
 
     const handleDelete = async () => {
         try {
-            const response = await fetch("/api/users/" + id, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            const session = await getSession();
+            const token = session ? session.user.jwt : null;
+            const response = await deleteFetch("/api/users/" + id, token);
+
             const responseData = await response.json();
             console.log(responseData);
             // Handle success
             toast.success("Utilisateur suprrimé avec succès !");
             ref.current?.close();
+            router.push("/utilisateurs");
         } catch (error) {
             console.error(error);
             // Handle error

@@ -3,10 +3,14 @@ import { Modal, Button } from "react-daisyui";
 import { useRef, useCallback } from "react";
 import toast from "react-hot-toast";
 import { FaPen } from "react-icons/fa6";
+import { putFetch } from "@/utils/fetch";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const ModalEditUser = ({ user }) => {
     const ref = useRef(null);
     const pseudoRef = useRef(null);
+    const router = useRouter();
 
     const handleShow = useCallback(() => {
         ref.current?.showModal();
@@ -23,18 +27,20 @@ const ModalEditUser = ({ user }) => {
         ref.current?.close();
 
         try {
-            const response = await fetch(`/api/users/${user.id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
+            const session = await getSession();
+            const token = session ? session.user.jwt : null;
+            const response = await putFetch(
+                `/api/users/${user.id}`,
+                data,
+                token
+            );
+
             const responseData = await response.json();
             console.log(responseData);
             // Handle success
             toast.success("Utilisateur modifié avec succès !");
             ref.current?.close();
+            router.push("/utilisateurs");
         } catch (error) {
             console.error(error);
             // Handle error
@@ -67,7 +73,7 @@ const ModalEditUser = ({ user }) => {
                             </label>
                             <input
                                 type="text"
-                                id="pseudo"
+                                id={"pseudo" + user.id}
                                 name="pseudo"
                                 className="mt-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 ref={pseudoRef}

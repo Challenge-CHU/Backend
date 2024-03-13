@@ -2,10 +2,11 @@
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { Button } from "react-daisyui";
 import StatsCard from "../Global/StatsCard";
-// import DownloadUtilisateurDatas from "./DownloadUtilisateurDatas";
 import { useEffect, useState } from "react";
 import DownloadUtilisateurDatas from "./DownloadUtilisateurDatas";
 import GraphCard from "../Global/GraphCard";
+import { getSession } from "next-auth/react";
+import { getFetch } from "@/utils/fetch";
 
 const Utilisateur = ({ user }) => {
     const [challenge, setChallenge] = useState(null);
@@ -70,8 +71,11 @@ const Utilisateur = ({ user }) => {
 
     const getChallengeStats = async (challenge, user) => {
         try {
-            const response = await fetch(
-                "/api/users/" + user.id + "/stats/" + challenge.id
+            const session = await getSession();
+            const token = session ? session.user.jwt : null;
+            const response = await getFetch(
+                "/api/users/" + user.id + "/stats/" + challenge.id,
+                token
             );
             if (!response.ok) {
                 throw new Error("Failed to fetch challenge stats");
@@ -129,16 +133,13 @@ const Utilisateur = ({ user }) => {
         }
     }, [challenge]);
 
-    useEffect(() => {
-        console.log("challengeStats");
-        console.log(challengeStats);
-        console.log("graphWeeks");
-        console.log(graphWeeks);
-        console.log("graphSteps");
-        console.log(graphSteps);
-        console.log("maxSteps");
-        console.log(maxSteps);
-    }, [challengeStats, graphWeeks, graphSteps, maxSteps, challenge]);
+    useEffect(() => {}, [
+        challengeStats,
+        graphWeeks,
+        graphSteps,
+        maxSteps,
+        challenge,
+    ]);
 
     const formatNumber = (number) => {
         return new Intl.NumberFormat("fr-FR").format(number);

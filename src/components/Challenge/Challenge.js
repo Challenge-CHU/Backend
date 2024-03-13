@@ -6,6 +6,8 @@ import DownloadChallengeDatas from "./DownloadChallengeDatas";
 import { useEffect, useState } from "react";
 import ModalChallenge from "./ModalChallenge";
 import GraphCard from "../Global/GraphCard";
+import { getSession } from "next-auth/react";
+import { getFetch } from "@/utils/fetch";
 
 const Challenge = ({ challenges }) => {
     const [challenge, setChallenge] = useState(null);
@@ -45,8 +47,11 @@ const Challenge = ({ challenges }) => {
 
     const getChallengeStats = async (challenge) => {
         try {
-            const response = await fetch(
-                "/api/challenges/" + challenge.id + "/stats"
+            const session = await getSession();
+            const token = session ? session.user.jwt : null;
+            const response = await getFetch(
+                "/api/challenges/" + challenge.id + "/stats",
+                token
             );
             if (!response.ok) {
                 throw new Error("Failed to fetch challenge stats");
