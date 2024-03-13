@@ -8,16 +8,3 @@ services:
         command: ["npm", "run", "dev"]
         volumes:
             - ".:/app/"
-    postgres:
-        image: "postgres:16"
-        ports:
-            - "5432:5432"
-        environment:
-            - POSTGRES_USER=${DB_USER}
-            - POSTGRES_PASSWORD=${DB_PASSWORD}
-            - POSTGRES_DB=${DB_NAME}
-            - TZ=Europe/Paris
-            - PGTZ=Europe/Paris
-        volumes:
-            - ./postgres:/var/lib/postgresql/data
-            
