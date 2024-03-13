@@ -15,7 +15,12 @@ export async function GET(req, { params }) {
     }
 
     const date1 = new Date(startDate);
-    const date2 = new Date(endDate);
+    let date2 = new Date(endDate);
+
+    if (date2 > new Date()) {
+        date2 = new Date();
+        date2.setHours(23, 59, 59);
+    }
 
     if (!challengeId) {
         return NextResponse.json(

@@ -10,10 +10,8 @@ import {
     Pagination,
     getKeyValue,
     Image,
-    Tooltip,
 } from "@nextui-org/react";
-import { Button } from "react-daisyui";
-import { FaEye, FaPen, FaMagnifyingGlass } from "react-icons/fa6";
+import { FaEye, FaMagnifyingGlass } from "react-icons/fa6";
 import ModalDelete from "./ModalDelete";
 import ModalEditUser from "./ModalEditUser";
 import Link from "next/link";
@@ -108,11 +106,7 @@ const UserTable = ({ users }) => {
     return (
         <>
             <div className="flex lg:justify-end mb-3 items-center gap-3 ">
-                <FaMagnifyingGlass
-                    Search
-                    className="text-secondary"
-                    size={24}
-                />
+                <FaMagnifyingGlass className="text-secondary" size={24} />
                 <input
                     aria-label="Rechercher"
                     type="text"

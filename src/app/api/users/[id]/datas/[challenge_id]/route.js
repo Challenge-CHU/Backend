@@ -16,9 +16,12 @@ export async function GET(req, { params }) {
     }
 
     const date1 = new Date(startDate);
-    const date2 = new Date(endDate);
+    let date2 = new Date(endDate);
 
-    // Rest of the code...
+    if (date2 > new Date()) {
+        date2 = new Date();
+        date2.setHours(23, 59, 59);
+    }
 
     if (!userId) {
         return NextResponse.json({ error: "Missing user ID" }, { status: 400 });
