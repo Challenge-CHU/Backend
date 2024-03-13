@@ -3,7 +3,7 @@ import prisma from "../../../utils/db";
 
 import { Expo } from 'expo-server-sdk';
 
-// Create a new Expo SDK client
+// Create a new Expo SDK clien
 // optionally providing an access token if you have enabled push security
 let expo = new Expo();
 export async function GET(req, res) {
