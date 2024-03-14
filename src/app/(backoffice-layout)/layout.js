@@ -22,6 +22,7 @@ export default async function RootLayout({ children }) {
                 name="viewport"
                 content="width=device-width, initial-scale=1"
             />
+            <link rel="icon" href="/assets/app-icon.png" />
 
             <body
                 className={
