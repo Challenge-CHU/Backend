@@ -25,6 +25,7 @@ COPY --from=build /app/node_modules /app/node_modules
 COPY --from=build /app/.next /app/.next
 COPY --from=build /app/prisma /app/prisma
 COPY --from=build /app/public /app/public
+COPY cron.mjs /app/
 
 EXPOSE 3000
 
