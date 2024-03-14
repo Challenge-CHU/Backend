@@ -67,39 +67,47 @@ const Statistiques = ({ challengesStats, numberOfUsers }) => {
                                 value={numberOfUsers}
                             />
                             <StatsCard
-                                label="Challenges"
+                                label="Nombre de challenges"
                                 value={challengesStats.length}
                             />
-                            <GraphCard
-                                title="Nombre de pas par challenge"
-                                type="bar"
-                                datas={
-                                    graphTotalSteps.length > 0
-                                        ? graphTotalSteps
-                                        : [0]
-                                }
-                                labels={
-                                    graphTotalStepsLabels.length > 0
-                                        ? graphTotalStepsLabels
-                                        : [""]
-                                }
-                                max={getMaxAndStepSize(graphTotalSteps)[0]}
-                                stepSize={getMaxAndStepSize(graphTotalSteps)[1]}
-                                id={"chart-1"}
-                            />
+                            {graphTotalSteps && (
+                                <GraphCard
+                                    title="Nombre de pas par challenge"
+                                    type="bar"
+                                    datas={
+                                        graphTotalSteps.length > 0
+                                            ? graphTotalSteps
+                                            : [0]
+                                    }
+                                    labels={
+                                        graphTotalStepsLabels.length > 0
+                                            ? graphTotalStepsLabels
+                                            : [""]
+                                    }
+                                    max={getMaxAndStepSize(graphTotalSteps)[0]}
+                                    stepSize={
+                                        getMaxAndStepSize(graphTotalSteps)[1]
+                                    }
+                                    id={"chart-1"}
+                                />
+                            )}
                         </div>
                         <div className="lg:basis-1/2 flex flex-col gap-5">
-                            <GraphCard
-                                title="Utilisateurs actifs par challenge"
-                                type="bar"
-                                datas={graphNumberOfUsers}
-                                labels={graphNumberOfUsersLabels}
-                                max={getMaxAndStepSize(graphNumberOfUsers)[0]}
-                                stepSize={
-                                    getMaxAndStepSize(graphNumberOfUsers)[1]
-                                }
-                                id={"chart-2"}
-                            />
+                            {graphNumberOfUsers && (
+                                <GraphCard
+                                    title="Utilisateurs actifs par challenge"
+                                    type="bar"
+                                    datas={graphNumberOfUsers}
+                                    labels={graphNumberOfUsersLabels}
+                                    max={
+                                        getMaxAndStepSize(graphNumberOfUsers)[0]
+                                    }
+                                    stepSize={
+                                        getMaxAndStepSize(graphNumberOfUsers)[1]
+                                    }
+                                    id={"chart-2"}
+                                />
+                            )}
                         </div>
                     </section>
                 </div>
