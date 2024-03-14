@@ -5,7 +5,7 @@ async function main() {
     await prisma.badge.deleteMany();
     await prisma.badgeCategory.deleteMany();
     await prisma.badgeFamily.deleteMany();
-    
+
     const badgeCategoryBronze = await prisma.badgeCategory.create({
         data: {
             name: "Bronze",
@@ -63,8 +63,7 @@ async function main() {
     const badge100K = await prisma.badge.create({
         data: {
             name: "Badge 100K",
-            description: `Bravo ! Vous avez franchi la barre des 100 000 pas ! Continuez sur votre lancée et défiez-vous chaque jour pour atteindre de nouveaux sommets.
-            Félicitations ! Vous avez parcouru un demi-million de pas. Votre persévérance et votre engagement envers votre santé sont remarquables. Continuez à marcher avec détermination !`,
+            description: `Marcher 100 000 pas.`,
             image: "/badges/100K.png",
             rank: 1,
             BadgeCategory: {
@@ -83,7 +82,7 @@ async function main() {
     const badge250K = await prisma.badge.create({
         data: {
             name: "Badge 250K",
-            description: `Vous êtes sur la bonne voie ! Avec 250 000 pas à votre actif, vous montrez une détermination impressionnante. Continuez à avancer vers vos objectifs de santé et de bien-être !`,
+            description: `Marcher 250 000 pas`,
             image: "/badges/250K.png",
             rank: 2,
             BadgeCategory: {
@@ -103,8 +102,7 @@ async function main() {
         data: {
             name: "Badge 500K",
             rank: 3,
-            description: `Bravo ! Vous avez franchi la barre des 100 000 pas ! Continuez sur votre lancée et défiez-vous chaque jour pour atteindre de nouveaux sommets.
-            Félicitations ! Vous avez parcouru un demi-million de pas. Votre persévérance et votre engagement envers votre santé sont remarquables. Continuez à marcher avec détermination !`,
+            description: `Marcher 500 000 pas`,
             image: "/badges/500K.png",
             BadgeCategory: {
                 connect: {
@@ -122,7 +120,7 @@ async function main() {
     const badge2M = await prisma.badge.create({
         data: {
             name: "Badge 2M",
-            description: `Incroyable ! Vous avez atteint la marque impressionnante de 2 millions de pas ! Votre dévouement envers une vie active et saine est inspirant pour nous tous. Continuez à avancer et à repousser vos limites !`,
+            description: `Marcher 2 000 000 pas`,
             image: "/badges/2M.png",
             rank: 4,
             BadgeCategory: {
@@ -141,7 +139,7 @@ async function main() {
     const edition2024 = await prisma.badge.create({
         data: {
             name: "Édition 2024",
-            description: `Félicitations ! Vous avez participé à l'édition 2024 avec succès.En reconnaissance de votre engagement, voici votre badge exclusif. Merci pour votre contribution précieuse !`,
+            description: `Participer à l'édition 2024.`,
             image: "/badges/2024.png",
             rank: 0,
             BadgeCategory: {
@@ -160,7 +158,7 @@ async function main() {
     const edition2025 = await prisma.badge.create({
         data: {
             name: "Édition 2025",
-            description: `Félicitations ! Vous avez participé à l'édition 2025 avec succès.En reconnaissance de votre engagement, voici votre badge exclusif. Merci pour votre contribution précieuse !`,
+            description: `Participer à l'édition 2025.`,
             image: "/badges/2025.png",
             rank: 0,
             BadgeCategory: {
@@ -179,7 +177,7 @@ async function main() {
     const edition2026 = await prisma.badge.create({
         data: {
             name: "Édition 2026",
-            description: `Félicitations ! Vous avez participé à l'édition 2026 avec succès.En reconnaissance de votre engagement, voici votre badge exclusif. Merci pour votre contribution précieuse !`,
+            description: `Participer à l'édition 2026.`,
             image: "/badges/2026.png",
             rank: 0,
             BadgeCategory: {
@@ -198,7 +196,7 @@ async function main() {
     const edition2027 = await prisma.badge.create({
         data: {
             name: "Édition 2027",
-            description: `Félicitations ! Vous avez participé à l'édition 2027 avec succès.En reconnaissance de votre engagement, voici votre badge exclusif. Merci pour votre contribution précieuse !`,
+            description: `Participer à l'édition 2027.`,
             image: "/badges/2027.png",
             rank: 0,
             BadgeCategory: {
@@ -217,7 +215,7 @@ async function main() {
     const edition2028 = await prisma.badge.create({
         data: {
             name: "Édition 2028",
-            description: `Félicitations ! Vous avez participé à l'édition 2028 avec succès.En reconnaissance de votre engagement, voici votre badge exclusif. Merci pour votre contribution précieuse !`,
+            description: `Participer à l'édition 2028.`,
             image: "/badges/2028.png",
             rank: 0,
             BadgeCategory: {
@@ -236,7 +234,7 @@ async function main() {
     const serie3jours = await prisma.badge.create({
         data: {
             name: "Série 3 jours",
-            description: `Félicitations pour votre série de 3 jours à 10 000 pas ! Vous êtes sur la bonne voie pour atteindre vos objectifs de santé et de bien-être. Continuez à marcher vers une vie plus active !`,
+            description: `Réussir à marcher 10 000 pas pendant 3 jours consécutifs.`,
             image: "/badges/3j.png",
             rank: 1,
             BadgeCategory: {
@@ -255,7 +253,7 @@ async function main() {
     const serie7jours = await prisma.badge.create({
         data: {
             name: "Série 7 jours",
-            description: `Bravo ! Vous avez atteint une semaine complète à 10 000 pas par jour. Votre persévérance est admirable et votre détermination est inspirante. Continuez à faire de l'exercice et à vous sentir bien !`,
+            description: `Réussir à marcher 10 000 pas pendant 7 jours consécutifs.`,
             image: "/badges/7j.png",
             rank: 2,
             BadgeCategory: {
@@ -274,7 +272,7 @@ async function main() {
     const serie14jours = await prisma.badge.create({
         data: {
             name: "Série 14 jours",
-            description: `Excellent travail ! Vous avez réussi à maintenir une série impressionnante de 14 jours consécutifs à 10 000 pas. Votre engagement envers une vie saine est remarquable. Continuez sur cette lancée !`,
+            description: `Réussir à marcher 10 000 pas pendant 14 jours consécutifs.`,
             image: "/badges/14j.png",
             rank: 3,
             BadgeCategory: {
@@ -293,7 +291,7 @@ async function main() {
     const serie30jours = await prisma.badge.create({
         data: {
             name: "Série 30 jours",
-            description: `Félicitations pour un mois entier à 10 000 pas par jour ! Votre engagement envers votre santé et votre bien-être est exemplaire. Continuez à marcher vers une meilleure santé et un meilleur bien-être !`,
+            description: `Réussir à marcher 10 000 pas pendant 30 jours consécutifs.`,
             image: "/badges/30j.png",
             rank: 4,
             BadgeCategory: {
@@ -312,7 +310,7 @@ async function main() {
     const serie90jours = await prisma.badge.create({
         data: {
             name: "Série 90 jours",
-            description: `Bravo ! Vous avez maintenu une série impressionnante de 90 jours à 10 000 pas. Votre détermination et votre persévérance sont dignes d'admiration. Continuez à marcher vers vos objectifs avec confiance !`,
+            description: `Réussir à marcher 10 000 pas pendant 90 jours consécutifs.`,
             image: "/badges/90j.png",
             rank: 5,
             BadgeCategory: {
@@ -331,7 +329,7 @@ async function main() {
     const serie180jours = await prisma.badge.create({
         data: {
             name: "Série 180 jours",
-            description: `Incroyable ! Vous avez atteint un demi-année à 10 000 pas par jour. Votre engagement envers un mode de vie actif et sain est exemplaire. Continuez à marcher avec détermination et à inspirer les autres !`,
+            description: `Réussir à marcher 10 000 pas pendant 180 jours consécutifs.`,
             image: "/badges/180j.png",
             rank: 6,
             BadgeCategory: {
@@ -350,7 +348,7 @@ async function main() {
     const ecoWalkerDebutant = await prisma.badge.create({
         data: {
             name: "Éco-Walker débutant",
-            description: `Félicitations ! En tant que "Éco-walker débutant", vous avez réalisé des économies de CO2 estimées à 50 kg en optant pour des modes de transport écologiques. Votre engagement en faveur de la réduction des émissions de carbone est un pas dans la bonne direction pour un avenir plus durable. Continuez à marcher pour la planète !`,
+            description: `Economiser 50 kg de CO2 grâce à vos choix de transport respectueux de l'environnement.`,
             image: "/badges/CO2%20B.png",
             rank: 1,
             BadgeCategory: {
@@ -369,7 +367,7 @@ async function main() {
     const ecoWalkerEngage = await prisma.badge.create({
         data: {
             name: "Éco-Walker engagé",
-            description: `Bravo ! En tant que "Éco-walker  Engagé", vous avez maintenant économisé 100 kg de CO2 grâce à vos choix de transport respectueux de l'environnement. Votre détermination à réduire votre empreinte carbone est remarquable et inspire les autres à suivre votre exemple. Continuez à marcher avec conviction pour un avenir plus vert !`,
+            description: `Economiser 100 kg de CO2 grâce à vos choix de transport respectueux de l'environnement.`,
             image: "/badges/CO2%20A.png",
             rank: 2,
             BadgeCategory: {
@@ -388,7 +386,7 @@ async function main() {
     const ecoChampion = await prisma.badge.create({
         data: {
             name: "Éco-Champion",
-            description: `Félicitations, vous êtes désormais un "Pas pour la Planète" ! Avec des économies de CO2 estimées à 200 kg, vous êtes un véritable champion de la marche écologique. Votre engagement envers la réduction des émissions de carbone est une source d'inspiration pour nous tous. Continuez à marcher fièrement, car chaque pas compte dans la préservation de notre planète !`,
+            description: `Economiser 200 kg de CO2 grâce à vos choix de transport respectueux de l'environnement.`,
             image: "/badges/CO2%20C.png",
             rank: 3,
             BadgeCategory: {
