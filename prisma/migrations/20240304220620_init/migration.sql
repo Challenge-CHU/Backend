@@ -1,5 +1,6 @@
 -- CreateTable
 SET TIME ZONE 'Europe/Paris';
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
