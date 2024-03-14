@@ -3,11 +3,13 @@ import Image from "next/image";
 import { Button, Input, Alert } from "react-daisyui";
 import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
+    const router = useRouter();
 
     const verifyData = async () => {
         const newErrors = [];
@@ -28,18 +30,16 @@ export default function SignIn() {
         if (valid) {
             try {
                 const response = await signIn("credentials", {
-                    redirect: true,
+                    redirect: false,
                     username,
                     password,
-                    callbackUrl: "/",
                 });
-                // console.log(response);
+                console.log(response);
                 if (response && response.status === 401) {
                     // Handle invalid credentials error
                     setErrors(["L'username ou le mot de passe est incorrect"]);
                 } else {
-                    // Handle other login errors
-                    // console.log("An error occurred during login");
+                    router.push("/challenges");
                     return;
                 }
             } catch (error) {
@@ -75,6 +75,34 @@ export default function SignIn() {
             <h1 className="font-bold text-secondary text-xl md:text-2xl">
                 Challenge 10000 pas
             </h1>
+            {errors.length > 0 && (
+                <>
+                    {errors.map((error, index) => (
+                        <Alert
+                            key={index}
+                            className="rounded-xl font-semibold"
+                            status="error"
+                            icon={
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="stroke-current shrink-0 h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                </svg>
+                            }
+                        >
+                            <span>{error}</span>
+                        </Alert>
+                    ))}
+                </>
+            )}
             <form
                 className="w-full flex flex-col gap-3 "
                 onSubmit={handleSubmit}
@@ -125,34 +153,6 @@ export default function SignIn() {
                         placeholder="Entrez votre mot de passe"
                     />
                 </div>
-                {errors.length > 0 && (
-                    <>
-                        {errors.map((error, index) => (
-                            <Alert
-                                key={index}
-                                className="rounded"
-                                status="error"
-                                icon={
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="stroke-current shrink-0 h-6 w-6"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        />
-                                    </svg>
-                                }
-                            >
-                                <span>{error}</span>
-                            </Alert>
-                        ))}
-                    </>
-                )}
 
                 <Button
                     type="submit"
