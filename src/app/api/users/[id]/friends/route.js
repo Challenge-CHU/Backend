@@ -13,6 +13,33 @@ export async function GET(req, { params }) {
             where: { user_id: userId }
 
         });
+        console.log(friends)
+
+        for (const friend of friends) {
+            const user = await prisma.user.findUnique({
+                where: {
+                    id: friend.friend_id
+                }
+            })
+
+            friend.pseudo = user.pseudo;
+            friend.avatar_id = user.avatar_id;
+
+            const stepsFriends= await prisma.step.findMany({
+                where: {
+                    user_id: friend.friend_id
+                }
+            })
+
+            const stepToday = stepsFriends.filter(step => {
+                const today = new Date();
+                return step.date.toDateString() === today.toDateString();
+            })
+
+            friend.stepToday = stepToday[0].step_count;
+
+            friend.stepsTotal = stepsFriends.reduce((acc, step) => acc + step.step_count, 0);
+        }
 
         return NextResponse.json({ data: friends }, { status: 200 });
     } catch (error) {
