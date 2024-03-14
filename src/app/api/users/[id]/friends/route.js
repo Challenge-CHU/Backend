@@ -22,33 +22,37 @@ export async function GET(req, { params }) {
 
 export async function POST(req, { params }) {
     const userId = params.id;
-    const { friend_id } = await req.json();
+    const { friend_pseudo } = await req.json();
 
     try {
+        const friend = await prisma.user.findUnique({
+            where: {
+                pseudo: friend_pseudo
+            }
+        })
+
         const friendExists = await prisma.userFriend.findFirst({
             where: {
-                friend_id: friend_id,
+                friend_id: friend.id,
                 user_id: userId
             }
         })
+
+        if (friendExists) {
+            return NextResponse.json({ error: "Friend link already exists" }, { status: 400 });
+        } else {
+
+                const userFriend = await prisma.userFriend.create({
+                    data: {
+                        user_id: userId,
+                        friend_id: friend.id,
+                    },
+                });
+
+                return NextResponse.json({ data: userFriend }, { status: 201 });
+
+        }
     } catch (error) {
         return NextResponse.json({ error }, { status: 500 });
-    }
-
-    if (friendExists) {
-        return NextResponse.json({ error: "Friend link already exists" }, { status: 400 });
-    } else {
-        try {
-            const friend = await prisma.userFriend.create({
-                data: {
-                    user_id: userId,
-                    friend_id: friend_id,
-                },
-            });
-
-            return NextResponse.json({ data: friend }, { status: 201 });
-        } catch (error) {
-            return NextResponse.json({ error }, { status: 500 });
-        }
     }
 }
