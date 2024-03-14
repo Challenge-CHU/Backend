@@ -348,7 +348,7 @@ async function main() {
     const ecoWalkerDebutant = await prisma.badge.create({
         data: {
             name: "Éco-Walker débutant",
-            description: `Economiser 50 kg de CO2 grâce à vos choix de transport respectueux de l'environnement.`,
+            description: `Économiser 50 kg de CO2 grâce à vos choix de transport respectueux de l'environnement.`,
             image: "/badges/CO2%20B.png",
             rank: 1,
             BadgeCategory: {
@@ -367,7 +367,7 @@ async function main() {
     const ecoWalkerEngage = await prisma.badge.create({
         data: {
             name: "Éco-Walker engagé",
-            description: `Economiser 100 kg de CO2 grâce à vos choix de transport respectueux de l'environnement.`,
+            description: `Économiser 100 kg de CO2 grâce à vos choix de transport respectueux de l'environnement.`,
             image: "/badges/CO2%20A.png",
             rank: 2,
             BadgeCategory: {
@@ -386,7 +386,7 @@ async function main() {
     const ecoChampion = await prisma.badge.create({
         data: {
             name: "Éco-Champion",
-            description: `Economiser 200 kg de CO2 grâce à vos choix de transport respectueux de l'environnement.`,
+            description: `Économiser 200 kg de CO2 grâce à vos choix de transport respectueux de l'environnement.`,
             image: "/badges/CO2%20C.png",
             rank: 3,
             BadgeCategory: {
