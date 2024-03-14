@@ -1,0 +1,96 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String              @id @default(uuid())
+  identifier            String              @unique
+  pseudo                String              @unique
+  firebase_device_token String?
+  avatar_id             String?
+  Steps                 Step[]
+  streak                Int                 @default(0)
+  UserBadge             UserBadge[]
+  FriendOf              UserFriend[]        @relation("UserFriendFriend")
+  Friends               UserFriend[]        @relation("UserFriendUser")
+  RequestOf             UserFriendRequest[] @relation("UserFriendRequestFriend")
+  FriendRequests        UserFriendRequest[] @relation("UserFriendRequestUser")
+}
+
+model Step {
+  id           String    @id @default(uuid())
+  user_id      String
+  date         DateTime
+  step_count   Int
+  challenge_id String
+  Challenge    Challenge @relation(fields: [challenge_id], references: [id])
+  User         User      @relation(fields: [user_id], references: [id])
+}
+
+model Challenge {
+  id          String      @id @default(uuid())
+  name        String      @db.VarChar(50)
+  description String
+  password    String
+  start_date  DateTime
+  end_date    DateTime
+  steps       Step[]
+  UserBadge   UserBadge[]
+}
+
+model UserBadge {
+  id           String    @id @default(uuid())
+  user_id      String
+  badge_id     String
+  challenge_id String
+  Badge        Badge     @relation(fields: [badge_id], references: [id])
+  Challenge    Challenge @relation(fields: [challenge_id], references: [id])
+  User         User      @relation(fields: [user_id], references: [id])
+}
+
+model Badge {
+  id                String        @id @default(uuid())
+  name              String
+  description       String
+  image             String
+  rank              Int
+  badge_category_id String
+  badge_family_id   String
+  BadgeCategory     BadgeCategory @relation(fields: [badge_category_id], references: [id])
+  UserBadge         UserBadge[]
+  BadgeFamily       BadgeFamily  @relation(fields: [badge_family_id], references: [id])
+}
+
+model BadgeCategory {
+  id     String  @id @default(uuid())
+  name   String
+  Badges Badge[]
+}
+
+model BadgeFamily {
+  id     String @id @default(uuid())
+  name   String
+  Badges Badge[]
+}
+
+model UserFriend {
+  id        String @id @default(uuid())
+  user_id   String
+  friend_id String
+  Friend    User   @relation("UserFriendFriend", fields: [friend_id], references: [id])
+  User      User   @relation("UserFriendUser", fields: [user_id], references: [id])
+}
+
+model UserFriendRequest {
+  id        String @id @default(uuid())
+  user_id   String
+  friend_id String
+  Friend    User   @relation("UserFriendRequestFriend", fields: [friend_id], references: [id])
+  User      User   @relation("UserFriendRequestUser", fields: [user_id], references: [id])
+}

@@ -2,30 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
-    color: black;
-} */
-
-/* :root {
-    --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 214, 219, 220;
-    --background-end-rgb: 255, 255, 255;
+.btn-primary {
+    color: white !important;
 }
 
-
-
-body {
-    color: rgb(var(--foreground-rgb));
-    background: linear-gradient(
-            to bottom,
-            transparent,
-            rgb(var(--background-end-rgb))
-        )
-        rgb(var(--background-start-rgb));
+.shadow-custom {
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1) !important;
 }
 
-@layer utilities {
-    .text-balance {
-        text-wrap: balance;
+.menu a {
+    font-size: 16px;
+    font-weight: 600;
+    color: #317dba;
+    border-radius: 0;
+}
+
+.menu a.active {
+    font-size: 16px;
+    font-weight: 600;
+    color: white !important;
+    background-color: #00b4ec !important;
+    border-radius: 0;
+}
+
+.menu a:hover,
+.menu a:active,
+.menu a:focus,
+.menu a:focus-visible {
+    color: #00b4ec !important;
+    background-color: #f5f5f5 !important;
+}
+
+.menu a:hover.active,
+.menu a:active.active,
+.menu a:focus.active,
+.menu a:focus-visible.active {
+    color: white !important;
+    background-color: #00b4ec !important;
+}
+
+.columns-2-custom {
+    grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+    /* Your mobile-specific styles here */
+
+    .columns-2-custom {
+        grid-template-columns: 1fr;
     }
-} */
+
+    .logo-sidebar {
+        max-height: 50px;
+        height: auto;
+        object-fit: contain;
+        object-position: left;
+    }
+}
+
+.anim-challenge {
+    animation: challenge 0.75s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes challenge {
+    0% {
+        transform: translateY(10%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal {
+    z-index: 998 !important;
+}
+.toast {
+    position: relative !important;
+    z-index: 200000 !important;
+    filter: none !important;
+}
+.shadow-small {
+    box-shadow: 0px 0px 0 0px rgba(0, 0, 0, 0) !important;
+}
+
+.btn-outline.btn-secondary:hover {
+    color: #fff !important;
+}
