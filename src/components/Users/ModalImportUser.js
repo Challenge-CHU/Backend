@@ -2,7 +2,7 @@
 import { Modal, Button } from "react-daisyui";
 import { useRef, useCallback } from "react";
 import toast from "react-hot-toast";
-import { FaPlus } from "react-icons/fa6";
+import { FaDownload, FaPlus, FaUpload } from "react-icons/fa6";
 import { useState } from "react";
 import Papa from "papaparse";
 import { postFetch } from "@/utils/fetch";
@@ -85,7 +85,7 @@ const ModalImportUser = () => {
                 toast.success("Utilisateurs ajoutés avec succès !");
             }
             ref.current?.close();
-            router.push("/utilisateurs");
+            router.refresh();
         } catch (error) {
             // Handle error
             toast.error(
@@ -102,7 +102,7 @@ const ModalImportUser = () => {
                 size="sm"
                 onClick={handleShow}
             >
-                <FaPlus className="mr-1" />
+                <FaUpload className="mr-1" />
                 Import CSV
             </Button>
             <Modal ref={ref} className="">

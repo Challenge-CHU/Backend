@@ -1,13 +1,12 @@
-"use client";
 import { useEffect } from "react";
 import { Chart } from "chart.js";
-import { v4 as uuidv4 } from "uuid";
 
-function Example({ labels, datas, max, stepSize, id }) {
+function Example({ labels, datas, max, id, stepSize }) {
     useEffect(() => {
+        console.log(max, stepSize);
         var ctx = document.getElementById(id).getContext("2d");
         var myChart = new Chart(ctx, {
-            type: "line",
+            type: "bar",
             data: {
                 labels: labels,
                 datasets: [
@@ -16,8 +15,6 @@ function Example({ labels, datas, max, stepSize, id }) {
                         label: "Données",
                         borderColor: "#00B4EC",
                         backgroundColor: "#7bb6dd",
-                        fill: true,
-                        tension: 0,
                     },
                 ],
             },
@@ -34,9 +31,15 @@ function Example({ labels, datas, max, stepSize, id }) {
                         },
                     ],
                 },
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                responsive: true,
             },
         });
-    }, [labels, datas, max, stepSize, id]);
+    }, [labels, datas, max, id, stepSize]);
     return (
         <>
             {/* line chart */}

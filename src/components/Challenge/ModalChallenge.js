@@ -76,7 +76,7 @@ const ModalChallenge = ({ challenge }) => {
                 toast.error("Une erreur est survenue");
             }
             ref.current?.close();
-            router.push("/challenges");
+            router.refresh();
         } catch (error) {
             // Handle error
             toast.error(

@@ -232,6 +232,7 @@ const Challenge = ({ challenges }) => {
                                 max={maxSteps}
                                 labels={graphWeeks}
                                 stepSize={stepSize}
+                                id={"chart-1"}
                             />
                         </div>
                         <div className="col-span-2 lg:col-span-1 grid columns-2-custom gap-5 h-fit">
