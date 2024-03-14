@@ -16,7 +16,7 @@ async function sendNotification() {
             messages.push({
                 to: `${token}`,
                 sound: 'default',
-                body: 'Veuillez vous connecter afin de synchroniser vos pas',
+                body: "Oublie pas d'ouvrir l'application pour synchroniser tes pas !",
                 data: {
                     'content-available': 1,
                 },
