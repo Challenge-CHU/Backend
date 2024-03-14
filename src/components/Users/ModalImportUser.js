@@ -85,7 +85,7 @@ const ModalImportUser = () => {
                 toast.success("Utilisateurs ajoutés avec succès !");
             }
             ref.current?.close();
-            router.push("/utilisateurs");
+            router.refresh();
         } catch (error) {
             // Handle error
             toast.error(

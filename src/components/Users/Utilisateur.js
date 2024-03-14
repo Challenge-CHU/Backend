@@ -235,6 +235,7 @@ const Utilisateur = ({ user }) => {
                                 max={maxSteps}
                                 labels={graphWeeks}
                                 stepSize={stepSize}
+                                id={"chart-1"}
                             />
                         </div>
                         <div className="w-full lg:basis-1/2 grid columns-2-custom gap-5 h-fit">

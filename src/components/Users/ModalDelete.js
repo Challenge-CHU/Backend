@@ -25,7 +25,7 @@ const ModalDelete = ({ id }) => {
             // Handle success
             toast.success("Utilisateur supprimé avec succès !");
             ref.current?.close();
-            router.push("/utilisateurs");
+            router.refresh();
         } catch (error) {
             console.error(error);
             // Handle error
