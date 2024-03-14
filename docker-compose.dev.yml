@@ -1,6 +1,6 @@
 services:
     next:
-        image: "ghcr.io/challenge-chu/backend/express-app:dev"
+        image: "ghcr.io/challenge-chu/backend/next-app:dev"
         ports:
             - "80:3000"
         environment:
