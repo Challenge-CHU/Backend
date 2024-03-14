@@ -67,6 +67,9 @@ export async function POST(req, { params }) {
 
         if (friendExists) {
             return NextResponse.json({ error: "Friend link already exists" }, { status: 400 });
+        } 
+        else if (friend.id === userId) {
+            return NextResponse.json({ error: "You can't add yourself as a friend" }, { status: 400 });
         } else {
 
                 const userFriend = await prisma.userFriend.create({

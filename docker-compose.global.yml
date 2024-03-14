@@ -22,6 +22,21 @@ services:
       - "--certificatesresolvers.myresolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.myresolver.acme.email=postmaster@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik-ui.entrypoints=websecure
+      - traefik.http.routers.traefik-ui.rule=Host(`traefik.alan-courtois.fr`)
+      - traefik.http.routers.traefik-ui.tls.certresolver=myresolver
+      - traefik.http.routers.traefik-ui.service=api@internal
+      - traefik.http.middlewares.infra-basic-auth.basicauth.users=${TRAEFIK_AUTH}
+      - traefik.http.middlewares.infra-basic-auth.basicauth.realm="Infra"
+      - "traefik.http.routers.traefik-ui.middlewares=infra-basic-auth"
+      - traefik.http.routers.http-catchall.entrypoints=web
+      - traefik.http.routers.http-catchall.rule=HostRegexp(`{host:.+}`)
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true
+      - traefik.http.routers.http-catchall.middlewares=redirect-to-https
+      - traefik.docker.network=internet
     ports:
       - "80:80"
       - "443:443"
@@ -31,7 +46,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     networks:
       - internet
-      
+
 networks:
   internet:
     driver: bridge
