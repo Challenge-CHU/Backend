@@ -128,7 +128,7 @@ const Utilisateur = ({ user }) => {
 
             fetchData();
         }
-    }, [challenge]);
+    }, [challenge, user]);
 
     useEffect(() => {}, [
         challengeStats,
