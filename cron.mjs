@@ -14,7 +14,7 @@ async function sendNotification() {
         filteredUsersFirebaseToken.forEach(token => {
             console.log(token)
             messages.push({
-                to: `ExponentPushToken[${token}]`,
+                to: `${token}`,
                 sound: 'default',
                 body: 'Veuillez vous connecter afin de synchroniser vos pas',
                 data: {
