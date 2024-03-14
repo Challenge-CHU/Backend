@@ -1,9 +1,6 @@
 services:
     next:
-        build:
-            context: .
-            target: next
-            dockerfile: Dockerfile.prod
+        image: "ghcr.io/challenge-chu/backend/express-app:dev"
         ports:
             - "80:3000"
         environment:
@@ -13,6 +10,8 @@ services:
             - ADMIN_USERNAME=${ADMIN_USERNAME}
             - ADMIN_PASSWORD=${ADMIN_PASSWORD}
             - JWT_SECRET=${JWT_SECRET}
+        labels:
+            - "com.centurylinklabs.watchtower.enable=true"
         networks:
             - app-network
         depends_on:
