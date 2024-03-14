@@ -16,6 +16,10 @@ export async function POST(req) {
     const { user_id, friend_id } = await req.json();
 
     try {
+        if(user_id === friend_id) {
+            return NextResponse.json({ error: "You can't be friends with yourself" }, { status: 400 });
+        }
+        
         const friend = await prisma.userFriend.create({
             data: {
                 user_id: user_id,
