@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Step" ALTER COLUMN "date" SET DATA TYPE DATE;
